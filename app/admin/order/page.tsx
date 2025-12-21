@@ -52,13 +52,12 @@ export default function OrdersPage() {
 
   /* ---------- UPDATE STATUS ---------- */
   const updateStatus = async (id: string, status: string) => {
-    console.log("Frontend - Updating ID:", id, "Status:", status);  // Debug log
     setUpdating(id);
     try {
-      const res = await fetch(`/api/order/${id}`, {
+      const res = await fetch("/api/order", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status }),
+        body: JSON.stringify({ id, status }), // send id in body
       });
       const data = await res.json();
       if (data.success) {
@@ -75,11 +74,14 @@ export default function OrdersPage() {
 
   /* ---------- DELETE ORDER ---------- */
   const deleteOrder = async (id: string) => {
-    console.log("Frontend - Deleting ID:", id);  // Debug log
     if (!confirm("Are you sure you want to delete this order?")) return;
     setDeleting(id);
     try {
-      const res = await fetch(`/api/order/${id}`, { method: "DELETE" });
+      const res = await fetch("/api/order", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }), // send id in body
+      });
       const data = await res.json();
       if (data.success) {
         fetchOrders();
@@ -156,7 +158,11 @@ export default function OrdersPage() {
                         <option value="completed">Completed</option>
                         <option value="cancelled">Cancelled</option>
                       </select>
-                      {updating === order._id && <span className="ml-2 text-sm text-gray-500">Updating...</span>}
+                      {updating === order._id && (
+                        <span className="ml-2 text-sm text-gray-500">
+                          Updating...
+                        </span>
+                      )}
                     </td>
 
                     <td className="p-2 text-center text-sm">

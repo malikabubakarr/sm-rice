@@ -1,21 +1,31 @@
+import { NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
 
-export async function POST(req: Request) {
+export async function GET() {
   try {
-    const body = await req.json();
     const client = await clientPromise;
     const db = client.db("SmRice");
 
-    await db.collection("contact").insertOne({
-      name: body.name,
-      email: body.email,
-      message: body.message,
-      createdAt: new Date(),
-    });
+    const contacts = await db
+      .collection("contact")
+      .find()
+      .sort({ createdAt: -1 })
+      .toArray();
 
-    return new Response(JSON.stringify({ success: true }), { status: 200 });
-  } catch (error) {
-    console.error("CONTACT API ERROR:", error);
-    return new Response(JSON.stringify({ success: false, error: error.message }), { status: 500 });
+    const formattedContacts = contacts.map((c: any) => ({
+      _id: c._id.toString(),
+      name: c.name || "",
+      email: c.email || "",
+      message: c.message || "",
+      createdAt: c.createdAt ? new Date(c.createdAt).toISOString() : new Date().toISOString(),
+    }));
+
+    return NextResponse.json({ success: true, contacts: formattedContacts });
+  } catch (err) {
+    console.error("Contacts GET error:", err);
+    return NextResponse.json(
+      { success: false, error: "Failed to fetch contacts" },
+      { status: 500 }
+    );
   }
 }
