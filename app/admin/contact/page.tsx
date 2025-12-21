@@ -1,4 +1,4 @@
-import clientPromise from "@/lib/mongodb";
+import { clientPromise } from "@/lib/mongodb";
 
 export const dynamic = "force-dynamic"; // Always fetch fresh data
 
