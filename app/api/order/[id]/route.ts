@@ -3,14 +3,12 @@ import clientPromise from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
 
 /* ---------- PATCH (Update Order Status) ---------- */
-// Use `any` for context to satisfy Next.js TS validator
-// @ts-expect-error: Next.js App Router strict type workaround
 export const PATCH = async (
   req: NextRequest,
-  context: { params: any }
+  context: { params: { id: string } } // concrete type
 ): Promise<NextResponse> => {
   try {
-    const { id } = context.params as { id: string }; // cast to string
+    const { id } = context.params;
     const { status } = await req.json();
 
     if (!status) {
@@ -42,14 +40,12 @@ export const PATCH = async (
 };
 
 /* ---------- DELETE (Remove Order) ---------- */
-// Use `any` for context to satisfy Next.js TS validator
-// @ts-expect-error: Next.js App Router strict type workaround
 export const DELETE = async (
   req: NextRequest,
-  context: { params: any }
+  context: { params: { id: string } } // concrete type
 ): Promise<NextResponse> => {
   try {
-    const { id } = context.params as { id: string };
+    const { id } = context.params;
 
     const client = await clientPromise;
     const db = client.db("SmRice");
