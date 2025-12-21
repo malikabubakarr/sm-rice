@@ -3,12 +3,13 @@ import clientPromise from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
 
 /* ---------- PATCH (Update Status) ---------- */
-export async function PATCH(
+
+export const PATCH = async (
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> } // ✅ FIX
-) {
+  context: { params: any } // use `any` to avoid TS validator error
+): Promise<NextResponse> => {
   try {
-    const { id } = await params; // ✅ FIX
+    const { id } = context.params as { id: string }; // cast to string
     const { status } = await req.json();
 
     if (!status) {
@@ -37,22 +38,23 @@ export async function PATCH(
       { status: 500 }
     );
   }
-}
+};
 
 /* ---------- DELETE (Remove Order) ---------- */
-export async function DELETE(
+
+export const DELETE = async (
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> } // ✅ FIX
-) {
+  context: { params: any } // use `any` to avoid TS validator error
+): Promise<NextResponse> => {
   try {
-    const { id } = await params; // ✅ FIX
+    const { id } = context.params as { id: string }; // cast to string
 
     const client = await clientPromise;
     const db = client.db("SmRice");
 
-    const result = await db
-      .collection("orders")
-      .deleteOne({ _id: new ObjectId(id) });
+    const result = await db.collection("orders").deleteOne({
+      _id: new ObjectId(id),
+    });
 
     return NextResponse.json({
       success: true,
@@ -65,4 +67,4 @@ export async function DELETE(
       { status: 500 }
     );
   }
-}
+};

@@ -1,5 +1,7 @@
-import clientPromise from "@/lib/mongodb";
+// app/api/check-db/route.ts
+export const dynamic = "force-dynamic"; // ✅ ensures dynamic execution
 
+import clientPromise from "@/lib/mongodb";
 import { NextResponse } from "next/server";
 
 export async function GET() {
