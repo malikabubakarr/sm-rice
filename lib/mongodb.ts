@@ -1,29 +1,29 @@
 // lib/mongodb.ts
 import { MongoClient } from "mongodb";
 
-if (!process.env.MONGODB_URI) {
-  throw new Error("❌ MONGODB_URI is not defined in environment variables");
-}
-
 const uri = process.env.MONGODB_URI;
-const options = {
-  // optional MongoClient options
-  // useUnifiedTopology: true, // MongoDB driver 4.x uses this by default
-};
+
+if (!uri) {
+  console.warn("⚠️ MONGODB_URI is not defined yet (build phase)");
+}
 
 let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
 
+// Global cache for development (HMR safe)
+declare global {
+  // eslint-disable-next-line no-var
+  var _mongoClientPromise: Promise<MongoClient> | undefined;
+}
+
 if (process.env.NODE_ENV === "development") {
-  // In development, use a global variable to avoid multiple connections during HMR
-  if (!(global as any)._mongoClientPromise) {
-    client = new MongoClient(uri, options);
-    (global as any)._mongoClientPromise = client.connect();
+  if (!global._mongoClientPromise) {
+    client = new MongoClient(uri as string);
+    global._mongoClientPromise = client.connect();
   }
-  clientPromise = (global as any)._mongoClientPromise;
+  clientPromise = global._mongoClientPromise!;
 } else {
-  // In production, just create a new client
-  client = new MongoClient(uri, options);
+  client = new MongoClient(uri as string);
   clientPromise = client.connect();
 }
 

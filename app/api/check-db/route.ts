@@ -1,22 +1,25 @@
 // app/api/check-db/route.ts
-export const dynamic = "force-dynamic"; // ✅ ensures dynamic execution
+
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs"; // ✅ IMPORTANT for MongoDB
 
 import clientPromise from "@/lib/mongodb";
 import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    await clientPromise; // ✅ MUST be called
+    const client = await clientPromise; // ✅ forces connection
+    await client.db("SmRice").command({ ping: 1 });
 
     return NextResponse.json(
-      { message: "MongoDB Connected" },
+      { success: true, message: "MongoDB Connected" },
       { status: 200 }
     );
   } catch (error) {
     console.error("MongoDB connection error:", error);
 
     return NextResponse.json(
-      { message: "MongoDB Connection Failed" },
+      { success: false, message: "MongoDB Connection Failed" },
       { status: 500 }
     );
   }
