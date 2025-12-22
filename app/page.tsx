@@ -14,6 +14,7 @@ async function getProducts() {
   }
 
   const data = await res.json();
+  console.log("Fetched products:", data.products[0]);
   return data.products || [];
 }
 
@@ -26,7 +27,9 @@ export default async function Home() {
       {/* Hero Section */}
       <section className="relative text-white py-28 flex items-center justify-center" style={{ minHeight: "600px" }}>
         <div className="absolute inset-0">
-          <Image src="/herodekstopbg.jpg" alt="Hero Background Desktop" fill className="hidden md:block object-cover" priority />
+          <div className="w-56 h-auto">
+            <Image src="/herodekstopbg.jpg" alt="Hero Background Desktop" fill className="hidden md:block object-cover" priority />
+            </div>
           <Image src="/herobg-mobile.jpg" alt="Hero Background Mobile" fill className="md:hidden object-cover" priority />
         </div>
         <div className="absolute inset-0 bg-black/40"></div>
@@ -135,7 +138,7 @@ export default async function Home() {
               <Link key={index} href={recipe.href} className="block rounded-xl overflow-hidden shadow-lg transition-transform duration-300 hover:scale-[1.03] group">
                 {/* 4:3 Aspect Ratio Container */}
                 <div className="relative w-full h-0 pb-[75%]"> 
-                  <Image src={recipe.src} alt={recipe.alt} layout="fill" objectFit="contain" /> 
+                  <Image src={recipe.src} alt={recipe.alt} fill className="object-contain" /> 
                 </div>
                 
                 <div className="p-4 bg-white text-center">
@@ -161,9 +164,8 @@ export default async function Home() {
               <Image 
                 src="/pinterest.jpg" 
                 alt="Perfectly Cooked Rice" 
-                layout="fill" 
-                objectFit="cover" 
-                className="transition-transform duration-500 hover:scale-105"
+                fill
+                className="transition-transform duration-500 hover:scale-105 object-cover"
               />
             </div>
             
