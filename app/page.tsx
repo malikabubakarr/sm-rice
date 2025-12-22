@@ -3,12 +3,13 @@ import Link from "next/link";
 
 /* ✅ FETCH PRODUCTS FROM DB */
 async function getProducts() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SITE_URL}/api/products?limit=5`,
-    { cache: "no-store" }
-  );
+  // Use environment variable or fallback to localhost
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
+  const res = await fetch(`${baseUrl}/api/products?limit=5`, { cache: "no-store" });
 
   if (!res.ok) {
+    console.error("Failed to fetch products:", res.statusText);
     return [];
   }
 
@@ -16,88 +17,102 @@ async function getProducts() {
   return data.products || [];
 }
 
-
-
 export default async function Home() {
   const products = await getProducts();
 
   return (
     <main className="bg-[#F5F0E6] min-h-screen">
 
-      {/* Hero Section */} <section className="relative text-white py-28 flex items-center justify-center" style={{ minHeight: "600px" }} > {/* Background Images - objectFit="cover" is appropriate for hero BGs */} <div className="absolute inset-0"> <Image src="/herodekstopbg.jpg" alt="Hero Background Desktop" fill className="hidden md:block object-cover" priority /> <Image src="/herobg-mobile.jpg" alt="Hero Background Mobile" fill className="md:hidden object-cover" priority /> </div> {/* Dark Overlay */} <div className="absolute inset-0 bg-black/40"></div> {/* Mobile Content (remains at bottom, centered) */} <div className="absolute bottom-12 left-0 right-0 z-10 md:hidden"> <div className="max-w-6xl mx-auto px-6 text-center"> <div className="md:max-w-xl"> {/* Brand - CLEANER TEXT */} <h1 className="text-3xl font-semibold tracking-wide text-[#F8F3E8] drop-shadow-lg"> <span className="text-[#E5D3B3] font-extrabold">S.M</span> RICE </h1> {/* Tagline - CLEANER TEXT */} <p className="mt-2 text-sm text-[#F1E7D3] leading-relaxed font-light"> Premium Quality Pakistani Rice — <span className="font-medium text-[#E5D3B3]"> {" "}Trusted for Purity & Export Excellence </span> </p> {/* Buttons */} <div className="mt-6 flex flex-wrap gap-4 justify-center"> <Link href="/products" className="bg-[#E5D3B3] text-[#5B3A1E] px-6 py-2 rounded-full text-sm font-medium hover:bg-[#6B4A2E] hover:text-white transition-all shadow-md hover:shadow-lg" > Explore Products </Link> <Link href="/About" className="border border-[#E5D3B3] text-[#E5D3B3] px-6 py-2 rounded-full text-sm font-medium hover:bg-[#E5D3B3] hover:text-[#5B3A1E] transition-all shadow-md hover:shadow-lg" > About Us </Link> </div> </div> </div> </div> {/* Desktop Content (on left mid, vertically centered) - CLEANER TEXT & STYLING */} <div className="hidden md:block absolute left-12 top-1/2 transform -translate-y-1/2 z-10"> <div className="max-w-md text-left"> {/* Brand - CLEANER TEXT */} <h1 className="text-4xl font-semibold tracking-wide text-[#F8F3E8] drop-shadow-lg"> <span className="text-[#E5D3B3] font-extrabold">S.M</span> RICE </h1> {/* Tagline - CLEANER TEXT */} <p className="mt-3 text-lg text-[#F1E7D3] leading-relaxed font-light"> Premium Quality Pakistani Rice — <span className="font-medium text-[#E5D3B3]"> {" "}Trusted for Purity & Export Excellence </span> </p> {/* Buttons */} <div className="mt-8 flex gap-4 justify-start"> <Link href="/products" className="bg-[#E5D3B3] text-[#5B3A1E] px-8 py-3 rounded-full text-base font-medium hover:bg-[#6B4A2E] hover:text-white transition-all shadow-md hover:shadow-lg" > Explore Products </Link> <Link href="/about" className="border border-[#E5D3B3] text-[#E5D3B3] px-8 py-3 rounded-full text-base font-medium hover:bg-[#E5D3B3] hover:text-[#5B3A1E] transition-all shadow-md hover:shadow-lg" > About Us </Link> </div> </div> </div> </section>
-      {/* --- Product Introduction Section --- */}
+      {/* Hero Section */}
+      <section className="relative text-white py-28 flex items-center justify-center" style={{ minHeight: "600px" }}>
+        <div className="absolute inset-0">
+          <Image src="/herodekstopbg.jpg" alt="Hero Background Desktop" fill className="hidden md:block object-cover" priority />
+          <Image src="/herobg-mobile.jpg" alt="Hero Background Mobile" fill className="md:hidden object-cover" priority />
+        </div>
+        <div className="absolute inset-0 bg-black/40"></div>
+
+        {/* Mobile Hero Content */}
+        <div className="absolute bottom-12 left-0 right-0 z-10 md:hidden">
+          <div className="max-w-6xl mx-auto px-6 text-center">
+            <div className="md:max-w-xl">
+              <h1 className="text-3xl font-semibold tracking-wide text-[#F8F3E8] drop-shadow-lg">
+                <span className="text-[#E5D3B3] font-extrabold">S.M</span> RICE
+              </h1>
+              <p className="mt-2 text-sm text-[#F1E7D3] leading-relaxed font-light">
+                Premium Quality Pakistani Rice —{" "}
+                <span className="font-medium text-[#E5D3B3]">Trusted for Purity & Export Excellence</span>
+              </p>
+              <div className="mt-6 flex flex-wrap gap-4 justify-center">
+                <Link href="/products" className="bg-[#E5D3B3] text-[#5B3A1E] px-6 py-2 rounded-full text-sm font-medium hover:bg-[#6B4A2E] hover:text-white transition-all shadow-md hover:shadow-lg">
+                  Explore Products
+                </Link>
+                <Link href="/about" className="border border-[#E5D3B3] text-[#E5D3B3] px-6 py-2 rounded-full text-sm font-medium hover:bg-[#E5D3B3] hover:text-[#5B3A1E] transition-all shadow-md hover:shadow-lg">
+                  About Us
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop Hero Content */}
+        <div className="hidden md:block absolute left-12 top-1/2 transform -translate-y-1/2 z-10">
+          <div className="max-w-md text-left">
+            <h1 className="text-4xl font-semibold tracking-wide text-[#F8F3E8] drop-shadow-lg">
+              <span className="text-[#E5D3B3] font-extrabold">S.M</span> RICE
+            </h1>
+            <p className="mt-3 text-lg text-[#F1E7D3] leading-relaxed font-light">
+              Premium Quality Pakistani Rice —{" "}
+              <span className="font-medium text-[#E5D3B3]">Trusted for Purity & Export Excellence</span>
+            </p>
+            <div className="mt-8 flex gap-4 justify-start">
+              <Link href="/products" className="bg-[#E5D3B3] text-[#5B3A1E] px-8 py-3 rounded-full text-base font-medium hover:bg-[#6B4A2E] hover:text-white transition-all shadow-md hover:shadow-lg">
+                Explore Products
+              </Link>
+              <Link href="/about" className="border border-[#E5D3B3] text-[#E5D3B3] px-8 py-3 rounded-full text-base font-medium hover:bg-[#E5D3B3] hover:text-[#5B3A1E] transition-all shadow-md hover:shadow-lg">
+                About Us
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* --- Product Grid Section --- */}
       <section className="bg-white py-16 px-6">
         <div className="max-w-7xl mx-auto flex flex-col items-center text-center">
 
           {/* Featured Image */}
           <div className="relative h-64 w-full max-w-sm mb-12">
-            <Image
-              src="/rice-product-feature.png"
-              alt="Featured SM Rice Product"
-              fill
-              className="object-contain"
-            />
+            <Image src="/rice-product-feature.png" alt="Featured SM Rice Product" fill className="object-contain" />
           </div>
 
-          {/* Text Content */}
           <div className="max-w-4xl">
-            <h2 className="text-3xl font-bold text-[#5B3A1E] mb-2">
-              SM Rice Products
-            </h2>
-            <h3 className="text-lg font-medium text-[#6B4A2E] mb-8">
-              No Measure, No Mess.
-            </h3>
+            <h2 className="text-3xl font-bold text-[#5B3A1E] mb-2">SM Rice Products</h2>
+            <h3 className="text-lg font-medium text-[#6B4A2E] mb-8">No Measure, No Mess.</h3>
             <p className="text-[#6B5135] text-base leading-relaxed mb-12 max-w-2xl mx-auto">
-              Our quality products are carefully designed with your needs in mind.
-              Whether you enjoy traditional White Rice, Brown Rice, Jasmine Rice,
-              Basmati Rice, Quinoa, or Pearl Couscous—we’ve got the size and flavor
-              that’s convenient for you.
+              Our quality products are carefully designed with your needs in mind. Whether you enjoy White Rice, Brown Rice, Jasmine Rice, Basmati Rice, Quinoa, or Pearl Couscous—we’ve got the size and flavor that’s convenient for you.
             </p>
           </div>
 
-{/* ================= PRODUCT GRID (DB BASED) ================= */}
-<div className="grid grid-cols-2 md:grid-cols-5 gap-6 w-full">
-  {products.slice(0, 6).map((product: any) => (
-    <Link
-      key={product._id}
-      href="/products"
-      className="block p-4 rounded-xl transition-shadow duration-300 hover:shadow-2xl bg-[#F5F0E6] group"
-    >
-      <div className="relative w-full h-0 pb-[75%] mb-3">
-        <Image
-          src={product.img && product.img !== "" ? product.img : "/rice-product-feature.png"}
-          alt={product.name}
-          fill
-          className="object-contain"
-        />
-      </div>
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-6 w-full">
+            {products.slice(0, 6).map((product: any) => (
+              <Link key={product._id} href="/products" className="block p-4 rounded-xl transition-shadow duration-300 hover:shadow-2xl bg-[#F5F0E6] group">
+                <div className="relative w-full h-0 pb-[75%] mb-3">
+                  <Image src={product.img || "/rice-product-feature.png"} alt={product.name} fill className="object-contain" />
+                </div>
+                <h4 className="font-semibold text-base text-[#5B3A1E] group-hover:text-[#6B4A2E] transition-colors">{product.name}</h4>
+                <p className="text-xs text-[#A07F5B] mt-1">{product.spec}</p>
+                <p className="mt-2 font-semibold text-sm text-[#6B4A2E]">PKR {product.price?.toLocaleString()}</p>
+              </Link>
+            ))}
+          </div>
 
-      <h4 className="font-semibold text-base text-[#5B3A1E] group-hover:text-[#6B4A2E] transition-colors">
-        {product.name}
-      </h4>
-
-      <p className="text-xs text-[#A07F5B] mt-1">
-        {product.spec}
-      </p>
-
-      <p className="mt-2 font-semibold text-sm text-[#6B4A2E]">
-        PKR {product.price?.toLocaleString()}
-      </p>
-    </Link>
-  ))}
-</div>
-
-{/* CTA */}
-<Link
-  href="/products"
-  className="inline-block mt-12 bg-[#5B3A1E] text-white px-8 py-3 rounded-full font-medium hover:bg-[#6B4A2E] transition-colors duration-300 shadow-xl transform hover:scale-[1.02]"
->
-  See All SM Rice Products
-</Link>
-
+          <Link href="/products" className="inline-block mt-12 bg-[#5B3A1E] text-white px-8 py-3 rounded-full font-medium hover:bg-[#6B4A2E] transition-colors duration-300 shadow-xl transform hover:scale-[1.02]">
+            See All SM Rice Products
+          </Link>
         </div>
       </section>
-      {/* --- END: Product Introduction Section --- */}
+
+       {/* --- END: Product Introduction Section --- */}
 
       {/* --- Recipe Preview Section (Pakistani Focus) --- */}
       <section className="bg-white py-16 px-6">
