@@ -99,7 +99,7 @@ export default function ContactPage() {
                 </div>
                 <h2 className="text-lg text-[#5B3A1E] font-light">Email</h2>
               </div>
-              <p className="text-[#6B5135] text-sm ml-14">salmancheema@outlook.com</p>
+              <p className="text-[#6B5135] text-sm ml-14">smricetraders0@gmail.com</p>
             </div>
           </div>
 

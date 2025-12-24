@@ -35,27 +35,57 @@ export default async function Home() {
         <div className="absolute inset-0 bg-black/40"></div>
 
         {/* Mobile Hero Content */}
-        <div className="absolute bottom-12 left-0 right-0 z-10 md:hidden">
-          <div className="max-w-6xl mx-auto px-6 text-center">
-            <div className="md:max-w-xl">
-              <h1 className="text-3xl font-semibold tracking-wide text-[#F8F3E8] drop-shadow-lg">
-                <span className="text-[#E5D3B3] font-extrabold">S.M</span> RICE
-              </h1>
-              <p className="mt-2 text-sm text-[#F1E7D3] leading-relaxed font-light">
-                Premium Quality Pakistani Rice —{" "}
-                <span className="font-medium text-[#E5D3B3]">Trusted for Purity & Export Excellence</span>
-              </p>
-              <div className="mt-6 flex flex-wrap gap-4 justify-center">
-                <Link href="/products" className="bg-[#E5D3B3] text-[#5B3A1E] px-6 py-2 rounded-full text-sm font-medium hover:bg-[#6B4A2E] hover:text-white transition-all shadow-md hover:shadow-lg">
-                  Explore Products
-                </Link>
-                <Link href="/about" className="border border-[#E5D3B3] text-[#E5D3B3] px-6 py-2 rounded-full text-sm font-medium hover:bg-[#E5D3B3] hover:text-[#5B3A1E] transition-all shadow-md hover:shadow-lg">
-                  About Us
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
+<div className="absolute bottom-12 left-0 right-0 z-10 md:hidden">
+  <div className="max-w-6xl mx-auto px-6 text-center">
+    <div className="md:max-w-xl">
+
+      {/* Animated Brand Heading */}
+      <h1 className="text-3xl font-semibold tracking-wide text-[#F8F3E8] drop-shadow-lg
+        transition-all duration-500
+        hover:tracking-widest hover:scale-105">
+        <span className="text-[#E5D3B3] font-extrabold
+          inline-block transition-transform duration-500 hover:rotate-2">
+          SM
+        </span>{" "}
+        <span className="inline-block transition-all duration-500 hover:-rotate-1">
+          RICE
+        </span>
+      </h1>
+
+      {/* Animated Tagline */}
+      <p className="mt-2 text-sm text-[#F1E7D3] leading-relaxed font-light
+        transition-all duration-500
+        hover:text-[#E5D3B3] hover:scale-[1.02]">
+        Premium Quality Pakistani Rice —{" "}
+        <span className="font-medium text-[#E5D3B3]
+          inline-block transition-all duration-500
+          hover:text-white hover:underline underline-offset-4">
+          Trusted for Purity & Export Excellence
+        </span>
+      </p>
+
+      {/* CTA Buttons (unchanged) */}
+      <div className="mt-6 flex flex-wrap gap-4 justify-center">
+        <Link
+          href="/products"
+          className="bg-[#E5D3B3] text-[#5B3A1E] px-6 py-2 rounded-full text-sm font-medium
+          hover:bg-[#6B4A2E] hover:text-white transition-all shadow-md hover:shadow-lg"
+        >
+          Explore Products
+        </Link>
+        <Link
+          href="/about"
+          className="border border-[#E5D3B3] text-[#E5D3B3] px-6 py-2 rounded-full text-sm font-medium
+          hover:bg-[#E5D3B3] hover:text-[#5B3A1E] transition-all shadow-md hover:shadow-lg"
+        >
+          About Us
+        </Link>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 
         {/* Desktop Hero Content */}
         <div className="hidden md:block absolute left-12 top-1/2 transform -translate-y-1/2 z-10">
@@ -79,80 +109,114 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* --- Product Grid Section --- */}
-      <section className="bg-white py-16 px-6">
-        <div className="max-w-7xl mx-auto flex flex-col items-center text-center">
+{/* --- Product Grid Section --- */}
+<section className="bg-white py-16 px-6">
+  <div className="max-w-7xl mx-auto flex flex-col items-center text-center">
 
-          {/* Featured Image */}
-          <div className="relative h-64 w-full max-w-sm mb-12">
-            <Image src="/rice-product-feature.png" alt="Featured SM Rice Product" fill className="object-contain" />
+    {/* Featured Image */}
+    <div className="relative h-64 w-full max-w-sm mb-12">
+      <Image src="/rice-product-feature.png" alt="Featured SM Rice Product" fill className="object-contain" />
+    </div>
+
+    <div className="max-w-4xl">
+      <h2 className="text-3xl font-bold text-[#5B3A1E] mb-2">SM Rice Products</h2>
+      <h3 className="text-lg font-medium text-[#6B4A2E] mb-8">No Measure, No Mess.</h3>
+      <p className="text-[#6B5135] text-base leading-relaxed mb-12 max-w-2xl mx-auto">
+        Our quality products are carefully designed with your needs in mind. Whether you enjoy White Rice, Brown Rice, Jasmine Rice, Basmati Rice, Quinoa, or Pearl Couscous—we’ve got the size and flavor that’s convenient for you.
+      </p>
+    </div>
+
+    <div className="grid grid-cols-2 md:grid-cols-5 gap-6 w-full">
+      {products.slice(0, 6).map((product: any) => (
+        <Link key={product._id} href="/products" className="block p-4 rounded-xl transition-shadow duration-300 hover:shadow-2xl bg-[#F5F0E6] group">
+          <div className="relative w-full h-0 pb-[75%] mb-3">
+            <Image src={product.img || "/rice-product-feature.png"} alt={product.name} fill className="object-contain" />
           </div>
+          <h4 className="font-semibold text-base text-[#5B3A1E] group-hover:text-[#6B4A2E] transition-colors">{product.name}</h4>
+          {/* Description removed */}
+          <p className="mt-2 font-semibold text-sm text-[#6B4A2E]">PKR {product.price?.toLocaleString()}</p>
+        </Link>
+      ))}
+    </div>
 
-          <div className="max-w-4xl">
-            <h2 className="text-3xl font-bold text-[#5B3A1E] mb-2">SM Rice Products</h2>
-            <h3 className="text-lg font-medium text-[#6B4A2E] mb-8">No Measure, No Mess.</h3>
-            <p className="text-[#6B5135] text-base leading-relaxed mb-12 max-w-2xl mx-auto">
-              Our quality products are carefully designed with your needs in mind. Whether you enjoy White Rice, Brown Rice, Jasmine Rice, Basmati Rice, Quinoa, or Pearl Couscous—we’ve got the size and flavor that’s convenient for you.
-            </p>
-          </div>
+    <Link href="/products" className="inline-block mt-12 bg-[#5B3A1E] text-white px-8 py-3 rounded-full font-medium hover:bg-[#6B4A2E] transition-colors duration-300 shadow-xl transform hover:scale-[1.02]">
+      See All SM Rice Products
+    </Link>
+  </div>
+</section>
 
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-6 w-full">
-            {products.slice(0, 6).map((product: any) => (
-              <Link key={product._id} href="/products" className="block p-4 rounded-xl transition-shadow duration-300 hover:shadow-2xl bg-[#F5F0E6] group">
-                <div className="relative w-full h-0 pb-[75%] mb-3">
-                  <Image src={product.img || "/rice-product-feature.png"} alt={product.name} fill className="object-contain" />
-                </div>
-                <h4 className="font-semibold text-base text-[#5B3A1E] group-hover:text-[#6B4A2E] transition-colors">{product.name}</h4>
-                <p className="text-xs text-[#A07F5B] mt-1">{product.spec}</p>
-                <p className="mt-2 font-semibold text-sm text-[#6B4A2E]">PKR {product.price?.toLocaleString()}</p>
-              </Link>
-            ))}
-          </div>
+{/* --- END: Product Introduction Section --- */}
 
-          <Link href="/products" className="inline-block mt-12 bg-[#5B3A1E] text-white px-8 py-3 rounded-full font-medium hover:bg-[#6B4A2E] transition-colors duration-300 shadow-xl transform hover:scale-[1.02]">
-            See All SM Rice Products
-          </Link>
-        </div>
-      </section>
-
-       {/* --- END: Product Introduction Section --- */}
 
       {/* --- Recipe Preview Section (Pakistani Focus) --- */}
-      <section className="bg-white py-16 px-6">
-        <div className="max-w-7xl mx-auto">
-          
-          {/* Refined Heading and Description for clean, modern look */}
-          <h2 className="text-center text-3xl font-bold text-[#5B3A1E] mb-4 tracking-tight">
-            A Taste of Pakistan: Rice Recipes
-          </h2>
-          
-          <p className="text-center text-[#6B5135] text-base italic max-w-4xl mx-auto mb-12">
-            Explore the rich and aromatic flavors of traditional South Asian cuisine. From savory **Biryani** and **Pulao** to sweet **Zarda**, elevate your next meal with SM Rice.
-          </p>
+<section className="bg-white py-16 px-6">
+  <div className="max-w-7xl mx-auto">
+    
+    {/* Refined Heading and Description for clean, modern look */}
+    <h2 className="text-center text-3xl font-bold text-[#5B3A1E] mb-4 tracking-tight">
+      A Taste of Pakistan: Rice Recipes
+    </h2>
+    
+    <p className="text-center text-[#6B5135] text-base italic max-w-4xl mx-auto mb-12">
+      Explore the rich and aromatic flavors of traditional South Asian cuisine. From savory <strong>Biryani</strong> and <strong>Pulao</strong> to sweet <strong>Zarda</strong>, elevate your next meal with SM Rice.
+    </p>
 
-          {/* Recipe Grid - Ensuring full image visibility in uniform containers */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    {/* Recipe Grid - Ensuring full image visibility in uniform containers */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
-            {/* Template for Recipe Card (4:3 Aspect Ratio for image) */}
-            {[{ href: "/recipes/chicken-biryani", src: "/recipe-biryani.jpg", alt: "Authentic Chicken Biryani", title: "Authentic Chicken Biryani", subtitle: "Aromatic Layers of Flavor" }, { href: "/recipes/mutton-pulao", src: "/recipepulao.jpg", alt: "Mutton Pulao", title: "Mutton Pulao (Kabli Pulao)", subtitle: "Lightly Spiced Rice Dish" }, { href: "/recipes/chinese-fried-rice", src: "/recipe-fried-rice.jpg", alt: "Chinese Fried Rice", title: "Quick Chinese Fried Rice", subtitle: "Weeknight Meal Essential" }, { href: "/recipes/zarda-sweet-rice", src: "/recipe-zarda.jpg", alt: "Traditional Zarda (Sweet Rice)", title: "Traditional Zarda (Sweet Rice)", subtitle: "Celebratory Sweet Treat" }].map((recipe, index) => (
-              <Link key={index} href={recipe.href} className="block rounded-xl overflow-hidden shadow-lg transition-transform duration-300 hover:scale-[1.03] group">
-                {/* 4:3 Aspect Ratio Container */}
-                <div className="relative w-full h-0 pb-[75%]"> 
-                  <Image src={recipe.src} alt={recipe.alt} fill className="object-contain" /> 
-                </div>
-                
-                <div className="p-4 bg-white text-center">
-                  {/* STYLED TEXT: Cleaner font-weight, subtle color change */}
-                  <h4 className="font-semibold text-lg text-[#4A4035] group-hover:text-[#5B3A1E] leading-normal">{recipe.title}</h4>
-                  {/* STYLED SUBTITLE: Added uppercase and wider tracking */}
-                  <p className="text-xs text-[#A07F5B] mt-1 uppercase tracking-wider">{recipe.subtitle}</p>
-                </div>
-              </Link>
-            ))}
+      {/* Recipe Cards (Links Removed) */}
+      {[{
+        src: "/recipe-biryani.jpg",
+        alt: "Authentic Chicken Biryani",
+        title: "Authentic Chicken Biryani",
+        subtitle: "Aromatic Layers of Flavor"
+      }, {
+        src: "/recipepulao.jpg",
+        alt: "Mutton Pulao",
+        title: "Mutton Pulao (Kabli Pulao)",
+        subtitle: "Lightly Spiced Rice Dish"
+      }, {
+        src: "/recipe-fried-rice.jpg",
+        alt: "Chinese Fried Rice",
+        title: "Quick Chinese Fried Rice",
+        subtitle: "Weeknight Meal Essential"
+      }, {
+        src: "/recipe-zarda.jpg",
+        alt: "Traditional Zarda (Sweet Rice)",
+        title: "Traditional Zarda (Sweet Rice)",
+        subtitle: "Celebratory Sweet Treat"
+      }].map((recipe, index) => (
+        
+        <div
+          key={index}
+          className="block rounded-xl overflow-hidden shadow-lg transition-transform duration-300 hover:scale-[1.03] group"
+        >
+          {/* 4:3 Aspect Ratio Container */}
+          <div className="relative w-full h-0 pb-[75%]">
+            <Image
+              src={recipe.src}
+              alt={recipe.alt}
+              fill
+              className="object-contain"
+            />
+          </div>
 
-          </div> {/* End of Recipe Grid */}
+          <div className="p-4 bg-white text-center">
+            <h4 className="font-semibold text-lg text-[#4A4035] group-hover:text-[#5B3A1E] leading-normal">
+              {recipe.title}
+            </h4>
+            <p className="text-xs text-[#A07F5B] mt-1 uppercase tracking-wider">
+              {recipe.subtitle}
+            </p>
+          </div>
         </div>
-      </section>
+
+      ))}
+
+    </div>
+  </div>
+</section>
+
 
       {/* --- Blog/Tips Feature Section --- */}
       <section className="py-16 px-6 bg-[#F5F0E6]">

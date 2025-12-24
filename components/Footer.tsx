@@ -108,7 +108,7 @@ export default function Footer() {
                 <Phone size={16} /> 03394021057
               </p>
               <p className="flex items-center gap-2">
-                <Mail size={16} /> salmancheema@outlook.com
+                <Mail size={16} /> smricetraders0@gmail.com
               </p>
               <p className="flex items-center gap-2">
                 <MapPin size={16} /> Samnabad main Los nala road Lahore, Pakistan

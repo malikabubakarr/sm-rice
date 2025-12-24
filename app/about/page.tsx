@@ -53,30 +53,36 @@ export default function About() {
         </section>
 
         {/* Location Section */}
-        <section className="bg-white p-8 md:p-10 rounded-lg shadow-sm border border-[#E5D3B3] mb-16 animate-slide-up">
-          <div className="grid md:grid-cols-2 gap-10 items-center">
-            <div className="relative h-64 md:h-80 w-full rounded-lg overflow-hidden shadow-sm">
-              <Image 
-                src="/pakistan-map-location.jpg" 
-                alt="Location in Pakistan" 
-                fill
-                className="object-cover transition-transform duration-500 hover:scale-105"
-              />
-            </div>
-            <div>
-              <h2 className="text-2xl md:text-3xl font-light text-[#5B3A1E] mb-6">
-                Our Location
-              </h2>
-              <p className="text-[#6B5135] text-sm md:text-base leading-relaxed mb-4">
-                Based in the heart of Punjab, Pakistan, S.M Rice Trading operates from our state-of-the-art facility in Lahore. Punjab's fertile soil and ideal climate make it the perfect region for cultivating the finest rice varieties. Our location allows us to maintain direct oversight of the supply chain, from farm to export.
-              </p>
-              <p className="text-[#6B5135] text-sm md:text-base leading-relaxed">
-                Address: Samnabad main Los nala road Lahore, Pakistan<br />
-                Contact: 03394021057 | salmancheema@outlook.com
-              </p>
-            </div>
-          </div>
-        </section>
+<section className="bg-white p-8 md:p-10 rounded-lg shadow-sm border border-[#E5D3B3] mb-16 animate-slide-up">
+  <div className="grid md:grid-cols-2 gap-10 items-center">
+
+    {/* Google Map */}
+    <div className="relative h-64 md:h-80 w-full rounded-lg overflow-hidden shadow-sm">
+      <iframe
+        src="https://www.google.com/maps?q=S.M+Rice+Trading+Samnabad+Lahore+Pakistan&output=embed"
+        className="w-full h-full border-0"
+        loading="lazy"
+        allowFullScreen
+        referrerPolicy="no-referrer-when-downgrade"
+      />
+    </div>
+
+    {/* Content */}
+    <div>
+      <h2 className="text-2xl md:text-3xl font-light text-[#5B3A1E] mb-6">
+        Our Location
+      </h2>
+      <p className="text-[#6B5135] text-sm md:text-base leading-relaxed mb-4">
+        Based in the heart of Punjab, Pakistan, S.M Rice Trading operates from our state-of-the-art facility in Lahore. Punjab's fertile soil and ideal climate make it the perfect region for cultivating the finest rice varieties. Our location allows us to maintain direct oversight of the supply chain, from farm to export.
+      </p>
+      <p className="text-[#6B5135] text-sm md:text-base leading-relaxed">
+        Address: Samnabad main Los nala road Lahore, Pakistan<br />
+        Contact: 03394021057 | smricetraders0@gmail.com
+      </p>
+    </div>
+
+  </div>
+</section>
 
         {/* Team Section */}
         <section className="bg-[#F5F0E6] p-8 md:p-10 rounded-lg shadow-sm mb-16 animate-slide-up">

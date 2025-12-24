@@ -39,41 +39,52 @@ export default function ProductCard({ product }: ProductCardProps) {
       </div>
 
       {/* Product Info */}
-      <h2 className="text-xl font-semibold text-[#5B3A1E]">
+      <h2 className="text-xl font-semibold text-[#5B3A1E] dark:text-[#5B3A1E]">
         {product.name}
       </h2>
 
       {/* Description */}
-      <p className="text-[#6B5135] mt-1 text-sm leading-relaxed">
-        <span className="font-semibold">Description:</span>{" "}
+      <p className="mt-1 text-sm leading-relaxed text-[#6B5135] dark:text-[#6B5135]">
+        <span className="font-semibold dark:text-[#5B3A1E]">Description:</span>{" "}
         {showFullDesc ? product.spec : shortDesc}
         {product.spec.length > 80 && (
           <button
             onClick={() => setShowFullDesc(!showFullDesc)}
-            className="ml-1 text-[#5B3A1E] font-medium hover:underline"
+            className="ml-1 text-[#5B3A1E] dark:text-[#5B3A1E] font-medium hover:underline"
           >
             {showFullDesc ? "Read Less" : "Read More"}
           </button>
         )}
       </p>
 
-      <p className="text-[#6B4A2E] font-bold mt-3">
+      {/* Price */}
+      <p className="mt-3 font-bold text-[#6B4A2E] dark:text-[#6B4A2E]">
         PKR {product.price.toLocaleString()}
       </p>
 
       {/* Quantity */}
       <div className="mt-3 flex items-center gap-2">
-        <label className="text-sm font-medium">Qty:</label>
+        <label className="text-sm font-medium text-[#5B3A1E] dark:text-[#5B3A1E]">
+          Qty:
+        </label>
         <input
           type="number"
           min={1}
           value={quantity}
           onChange={(e) => setQuantity(Number(e.target.value))}
-          className="border rounded px-2 py-1 w-20"
+          className="
+            border rounded px-2 py-1 w-20
+            text-[#5B3A1E] dark:text-[#5B3A1E]
+            bg-white dark:bg-white
+            border-[#E5D3B3] dark:border-[#E5D3B3]
+            shadow-sm dark:shadow-sm
+            focus:outline-none focus:ring-2 focus:ring-[#5B3A1E] dark:focus:ring-[#5B3A1E]
+            transition-all
+          "
         />
       </div>
 
-      {/* Add to Cart Button (STYLED & WELL PLACED) */}
+      {/* Add to Cart Button */}
       <button
         onClick={() => {
           addToCart({
