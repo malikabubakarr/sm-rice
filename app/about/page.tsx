@@ -17,30 +17,36 @@ export default function About() {
 
       <div className="max-w-7xl mx-auto px-6 pb-20 relative z-10">
         
-        {/* Hero Section for About */}
-        <section className="bg-white p-8 md:p-10 rounded-lg shadow-sm border border-[#E5D3B3] mb-16 animate-fade-in">
-          <div className="grid md:grid-cols-2 gap-10 items-center">
-            <div>
-              <h1 className="text-3xl md:text-4xl font-light text-[#5B3A1E] mb-6 tracking-tight">
-                About S.M Rice Trading
-              </h1>
-              <p className="text-[#6B5135] text-sm md:text-base leading-relaxed mb-6">
-                S.M Rice Trading is a premier rice supplier dedicated to delivering premium quality Pakistani rice worldwide. With a commitment to purity, excellence, and sustainability, we have become a trusted partner for wholesalers, exporters, and retailers globally.
-              </p>
-              <p className="text-[#6B5135] text-sm md:text-base leading-relaxed">
-                Our journey began in 2019, rooted in the fertile lands of Punjab, Pakistan. Over the years, we've grown from a local trader to an international brand, supplying rice to some of the world's most renowned food companies.
-              </p>
-            </div>
-            <div className="relative h-64 md:h-80 w-full rounded-lg overflow-hidden shadow-sm">
-              <Image 
-                src="/about-hero-rice-field.jpg" 
-                alt="Rice Fields in Punjab" 
-                fill
-                className="object-cover transition-transform duration-500 hover:scale-105"
-              />
-            </div>
-          </div>
-        </section>
+{/* Hero Section for About */}
+<section className="bg-white p-8 md:p-10 rounded-lg shadow-sm border border-[#E5D3B3] mb-16 animate-fade-in">
+  <div className="grid md:grid-cols-2 gap-10 items-center">
+    <div>
+      <h1 className="text-3xl md:text-4xl font-light text-[#5B3A1E] mb-6 tracking-tight">
+        About S.M Rice Trading
+      </h1>
+      <p className="text-[#6B5135] text-sm md:text-base leading-relaxed mb-6">
+        S.M Rice Trading is a premier rice supplier dedicated to delivering premium quality Pakistani rice worldwide. With a commitment to purity, excellence, and sustainability, we have become a trusted partner for wholesalers, exporters, and retailers globally.
+      </p>
+      <p className="text-[#6B5135] text-sm md:text-base leading-relaxed">
+        Our journey began in 2019, rooted in the fertile lands of Punjab, Pakistan. Over the years, we've grown from a local trader to an international brand, supplying rice to some of the world's most renowned food companies.
+      </p>
+    </div>
+
+    {/* Video Section */}
+    <div className="relative w-full rounded-lg overflow-hidden shadow-sm flex justify-center items-center bg-black">
+      <video
+        src="/about-hero-rice-video.mp4" // Place your video in the public folder
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="w-full h-auto max-h-[400px] md:max-h-[500px] rounded-lg"
+      />
+    </div>
+  </div>
+</section>
+
+
 
         {/* History Section */}
         <section className="bg-[#E5D3B3] p-8 md:p-10 rounded-lg shadow-sm mb-16 animate-slide-up">
