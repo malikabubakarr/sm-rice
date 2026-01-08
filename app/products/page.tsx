@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import ProductCard, { Product } from "@/components/ProductCard";
+import ProductCard from "@/components/ProductCard";
 
 type DBProduct = {
   _id: string;
   name: string;
-  spec: string;    // Description/specification
+  spec: string;
   img?: string;
   price: number;
 };
@@ -16,9 +16,8 @@ export default function ProductPage() {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch("/api/products");
+      const res = await fetch("/api/products", { cache: "no-store" });
       const data = await res.json();
-
       setProducts(Array.isArray(data.products) ? data.products : []);
     } catch (error) {
       console.error("Failed to fetch products:", error);
@@ -38,14 +37,18 @@ export default function ProductPage() {
         <div className="absolute bottom-20 right-20 w-40 h-40 bg-[#6B4A2E] rounded-full blur-3xl"></div>
       </div>
 
-      {/* Spacer for fixed navbar */}
+      {/* Spacer for navbar */}
       <div className="h-24 md:h-28 relative z-10" />
 
       {/* Header Section */}
       <section className="px-6 mb-16 relative z-10">
         <div className="max-w-7xl mx-auto text-center">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-[#5B3A1E] rounded-full mb-6 shadow-lg">
-            <svg className="w-8 h-8 text-[#E5D3B3]" fill="currentColor" viewBox="0 0 20 20">
+            <svg
+              className="w-8 h-8 text-[#E5D3B3]"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
               <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
             </svg>
           </div>
@@ -69,23 +72,23 @@ export default function ProductPage() {
                   className="animate-slide-up"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <ProductCard
-                    product={{
-                      id: product._id,
-                      name: product.name,
-                      spec: product.spec,
-                      img: product.img,
-                      price: product.price,
-                    }}
-                  />
+                  <ProductCard product={product} />
                 </div>
               ))}
             </div>
           ) : (
             <div className="text-center py-20">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-[#E5D3B3] rounded-full mb-4">
-                <svg className="w-8 h-8 text-[#5B3A1E]" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-[#E5D3B3] mb-4 rounded-full">
+                <svg
+                  className="w-8 h-8 text-[#5B3A1E]"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                    clipRule="evenodd"
+                  />
                 </svg>
               </div>
               <p className="text-[#6B5135] text-sm md:text-base font-light">
@@ -98,12 +101,24 @@ export default function ProductPage() {
 
       <style jsx>{`
         @keyframes fade-in {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
         @keyframes slide-up {
-          from { opacity: 0; transform: translateY(30px); }
-          to { opacity: 1; transform: translateY(0); }
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
         .animate-fade-in {
           animation: fade-in 0.8s ease-out forwards;

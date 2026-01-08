@@ -1,13 +1,13 @@
-// app/api/product/route.ts
-
 export const dynamic = "force-dynamic";
-export const runtime = "nodejs"; // ✅ REQUIRED for MongoDB
+export const runtime = "nodejs";
 
 import clientPromise from "@/lib/mongodb";
 import { NextResponse } from "next/server";
 import { ObjectId } from "mongodb";
 
-// ---------------- CREATE PRODUCT ----------------
+/**
+ * CREATE PRODUCT
+ */
 export async function POST(req: Request) {
   try {
     const data = await req.json();
@@ -33,7 +33,7 @@ export async function POST(req: Request) {
     return NextResponse.json({
       success: true,
       product: {
-        _id: result.insertedId.toString(), // ✅ serialize
+        _id: result.insertedId.toString(),
         name: data.name,
         spec: data.spec,
         img: data.img ?? null,
@@ -49,7 +49,9 @@ export async function POST(req: Request) {
   }
 }
 
-// ---------------- READ PRODUCTS ----------------
+/**
+ * READ ALL PRODUCTS
+ */
 export async function GET() {
   try {
     const client = await clientPromise;
@@ -61,18 +63,19 @@ export async function GET() {
       .sort({ createdAt: -1 })
       .toArray();
 
-    const formattedProducts = products.map((p: any) => ({
+    const formatted = products.map((p: any) => ({
       _id: p._id.toString(),
       name: p.name,
       spec: p.spec,
       img: p.img ?? null,
       price: p.price ?? 0,
-      createdAt: p.createdAt
-        ? new Date(p.createdAt).toISOString()
-        : null,
+      createdAt: p.createdAt ? new Date(p.createdAt).toISOString() : null,
     }));
 
-    return NextResponse.json({ success: true, products: formattedProducts });
+    return NextResponse.json({
+      success: true,
+      products: formatted,
+    });
   } catch (err) {
     console.error("Product GET error:", err);
     return NextResponse.json(
@@ -82,7 +85,9 @@ export async function GET() {
   }
 }
 
-// ---------------- UPDATE PRODUCT ----------------
+/**
+ * UPDATE PRODUCT
+ */
 export async function PATCH(req: Request) {
   try {
     const { _id, name, spec, img, price } = await req.json();
@@ -112,10 +117,9 @@ export async function PATCH(req: Request) {
     const client = await clientPromise;
     const db = client.db("SmRice");
 
-    const result = await db.collection("products").updateOne(
-      { _id: new ObjectId(_id) },
-      { $set: updateData }
-    );
+    const result = await db
+      .collection("products")
+      .updateOne({ _id: new ObjectId(_id) }, { $set: updateData });
 
     if (result.matchedCount === 0) {
       return NextResponse.json(
@@ -134,7 +138,9 @@ export async function PATCH(req: Request) {
   }
 }
 
-// ---------------- DELETE PRODUCT ----------------
+/**
+ * DELETE PRODUCT
+ */
 export async function DELETE(req: Request) {
   try {
     const { _id } = await req.json();
@@ -149,9 +155,9 @@ export async function DELETE(req: Request) {
     const client = await clientPromise;
     const db = client.db("SmRice");
 
-    const result = await db.collection("products").deleteOne({
-      _id: new ObjectId(_id),
-    });
+    const result = await db
+      .collection("products")
+      .deleteOne({ _id: new ObjectId(_id) });
 
     if (result.deletedCount === 0) {
       return NextResponse.json(

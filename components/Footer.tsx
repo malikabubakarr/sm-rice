@@ -41,27 +41,6 @@ const socialLinks = [
   },
 ];
 
-const navSections = [
-  {
-    title: "Company",
-    links: [
-      { name: "About Us", href: "/about" },
-      { name: "Our Story", href: "/about#story" },
-      { name: "Contact", href: "/contact" },
-      { name: "Careers", href: "/about" },
-    ],
-  },
-  {
-    title: "Products & Recipes",
-    links: [
-      { name: "All Products", href: "/products" },
-      { name: "Basmati Range", href: "/products" },
-      { name: "Recipes", href: "/blog" },
-      { name: "Where To Buy", href: "/products" },
-    ],
-  },
-];
-
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
@@ -69,6 +48,7 @@ export default function Footer() {
     <footer className="bg-[#3E2917] text-white">
       <div className="max-w-7xl mx-auto px-6 pt-12 pb-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 border-b border-white/10 pb-10">
+
           {/* Logo */}
           <div className="space-y-4">
             <Link href="/">
@@ -79,29 +59,31 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Navigation */}
-          {navSections.map((section) => (
-            <div key={section.title} className="space-y-3">
-              <h5 className="text-lg font-semibold text-[#E5D3B3]">
-                {section.title}
-              </h5>
-              {section.links.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className="block text-sm text-white/80 hover:text-[#E5D3B3]"
-                >
-                  {link.name}
-                </Link>
-              ))}
-            </div>
-          ))}
+          {/* Company */}
+          <div className="space-y-3">
+            <h5 className="text-lg font-semibold text-[#E5D3B3]">Company</h5>
+            <Link href="/about" className="block text-sm text-white/80 hover:text-[#E5D3B3]">About Us</Link>
+            <Link href="/products" className="block text-sm text-white/80 hover:text-[#E5D3B3]">Products</Link>
+            <Link href="/contact" className="block text-sm text-white/80 hover:text-[#E5D3B3]">Contact</Link>
+          </div>
+
+          {/* Legal */}
+          <div className="space-y-3">
+            <h5 className="text-lg font-semibold text-[#E5D3B3]">Legal</h5>
+            <Link href="/privacy-policy" className="block text-sm text-white/80 hover:text-[#E5D3B3]">
+              Privacy Policy
+            </Link>
+            <Link href="/terms-and-conditions" className="block text-sm text-white/80 hover:text-[#E5D3B3]">
+              Terms & Conditions
+            </Link>
+            <Link href="/refund-policy" className="block text-sm text-white/80 hover:text-[#E5D3B3]">
+              Return & Refund Policy
+            </Link>
+          </div>
 
           {/* Contact */}
           <div className="space-y-4">
-            <h5 className="text-lg font-semibold text-[#E5D3B3]">
-              Contact Information
-            </h5>
+            <h5 className="text-lg font-semibold text-[#E5D3B3]">Contact</h5>
 
             <div className="space-y-2 text-sm text-white/80">
               <p className="flex items-center gap-2">
@@ -128,6 +110,7 @@ export default function Footer() {
               ))}
             </div>
           </div>
+
         </div>
 
         <p className="text-xs text-center text-white/60 mt-6">

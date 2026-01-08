@@ -1,13 +1,13 @@
 // app/api/order/route.ts
 
 export const dynamic = "force-dynamic";
-export const runtime = "nodejs"; // ✅ REQUIRED for MongoDB
+export const runtime = "nodejs";
 
 import { NextRequest, NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
 
-/* ✅ Define CartItem locally (DO NOT import from client context) */
+/* CartItem stays same */
 type CartItem = {
   _id: string;
   name: string;
@@ -15,10 +15,18 @@ type CartItem = {
   quantity: number;
 };
 
+/* 🔹 UPDATED: address is now an object + email added */
 type Order = {
   name: string;
   phone: string;
-  address?: string;
+  email: string;
+  address: {
+    country: string;
+    province: string;
+    city: string;
+    street: string;
+    postalCode: string;
+  };
   products: CartItem[];
   totalAmount: number;
   status: "pending" | "completed" | "processing" | "cancelled";
@@ -30,12 +38,18 @@ export async function POST(req: NextRequest) {
   try {
     const data = await req.json();
 
+    // 🔹 VALIDATION UPDATED (adds email + structured address)
     if (
       !data ||
-      typeof data.name !== "string" ||
-      !data.name.trim() ||
-      typeof data.phone !== "string" ||
-      !data.phone.trim() ||
+      !data.name?.trim() ||
+      !data.phone?.trim() ||
+      !data.email?.trim() ||
+      !data.address ||
+      !data.address.country?.trim() ||
+      !data.address.province?.trim() ||
+      !data.address.city?.trim() ||
+      !data.address.street?.trim() ||
+      !data.address.postalCode?.trim() ||
       !Array.isArray(data.products) ||
       data.products.length === 0
     ) {
@@ -54,8 +68,17 @@ export async function POST(req: NextRequest) {
     const order: Order = {
       name: data.name.trim(),
       phone: data.phone.trim(),
-      address:
-        typeof data.address === "string" ? data.address.trim() : "",
+      email: data.email.trim(),
+
+      // 🔹 store address nicely
+      address: {
+        country: data.address.country.trim(),
+        province: data.address.province.trim(),
+        city: data.address.city.trim(),
+        street: data.address.street.trim(),
+        postalCode: data.address.postalCode.trim(),
+      },
+
       products: data.products,
       totalAmount,
       status: "pending",
@@ -96,7 +119,8 @@ export async function GET() {
       _id: o._id.toString(),
       name: o.name,
       phone: o.phone,
-      address: o.address ?? "",
+      email: o.email ?? "",
+      address: o.address ?? null,
       products: o.products,
       totalAmount: o.totalAmount,
       status: o.status,

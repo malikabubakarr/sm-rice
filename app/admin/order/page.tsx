@@ -12,11 +12,20 @@ type OrderProduct = {
   quantity: number;
 };
 
+type OrderAddress = {
+  country: string;
+  province: string;
+  city: string;
+  street: string;
+  postalCode: string;
+};
+
 type Order = {
   _id: string;
   name: string;
   phone: string;
-  address: string;
+  email: string;
+  address: OrderAddress | null;
   products: OrderProduct[];
   totalAmount: number;
   status: string;
@@ -57,41 +66,43 @@ export default function OrdersPage() {
       const res = await fetch("/api/order", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id, status }), // send id in body
+        body: JSON.stringify({ id, status }),
       });
+
       const data = await res.json();
-      if (data.success) {
-        fetchOrders();
-      } else {
-        alert("Failed to update status: " + (data.error || "Unknown error"));
-      }
+
+      if (data.success) fetchOrders();
+      else alert("Failed to update status: " + (data.error || "Unknown error"));
     } catch (err) {
       console.error("Update status error:", err);
       alert("Error updating status");
     }
+
     setUpdating(null);
   };
 
   /* ---------- DELETE ORDER ---------- */
   const deleteOrder = async (id: string) => {
     if (!confirm("Are you sure you want to delete this order?")) return;
+
     setDeleting(id);
+
     try {
       const res = await fetch("/api/order", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id }), // send id in body
+        body: JSON.stringify({ id }),
       });
+
       const data = await res.json();
-      if (data.success) {
-        fetchOrders();
-      } else {
-        alert("Failed to delete order: " + (data.error || "Unknown error"));
-      }
+
+      if (data.success) fetchOrders();
+      else alert("Failed to delete order: " + (data.error || "Unknown error"));
     } catch (err) {
       console.error("Delete order error:", err);
       alert("Error deleting order");
     }
+
     setDeleting(null);
   };
 
@@ -112,6 +123,7 @@ export default function OrdersPage() {
                 <th className="p-3 border">Products</th>
                 <th className="p-3 border">Customer</th>
                 <th className="p-3 border">Phone</th>
+                <th className="p-3 border">Email</th>
                 <th className="p-3 border">Address</th>
                 <th className="p-3 border">Qty</th>
                 <th className="p-3 border">Total (₨)</th>
@@ -130,20 +142,44 @@ export default function OrdersPage() {
 
                 return (
                   <tr key={order._id} className="hover:bg-gray-50">
+                    {/* PRODUCTS */}
                     <td className="p-2 font-medium">
                       {order.products.map((p) => p.productName).join(", ")}
                     </td>
 
+                    {/* NAME */}
                     <td className="p-2">{order.name}</td>
-                    <td className="p-2">{order.phone}</td>
-                    <td className="p-2">{order.address || "—"}</td>
 
+                    {/* PHONE */}
+                    <td className="p-2">{order.phone}</td>
+
+                    {/* EMAIL */}
+                    <td className="p-2">{order.email || "—"}</td>
+
+                    {/* ADDRESS */}
+                    <td className="p-2 text-sm leading-5">
+                      {order.address ? (
+                        <>
+                          {order.address.street}
+                          <br />
+                          {order.address.city}, {order.address.province}
+                          <br />
+                          {order.address.country} — {order.address.postalCode}
+                        </>
+                      ) : (
+                        "—"
+                      )}
+                    </td>
+
+                    {/* TOTAL QTY */}
                     <td className="p-2 text-center">{totalQty}</td>
 
+                    {/* TOTAL PRICE */}
                     <td className="p-2 text-center">
                       ₨{order.totalAmount.toLocaleString("en-PK")}
                     </td>
 
+                    {/* STATUS */}
                     <td className="p-2 text-center">
                       <select
                         value={order.status}
@@ -158,6 +194,7 @@ export default function OrdersPage() {
                         <option value="completed">Completed</option>
                         <option value="cancelled">Cancelled</option>
                       </select>
+
                       {updating === order._id && (
                         <span className="ml-2 text-sm text-gray-500">
                           Updating...
@@ -165,10 +202,12 @@ export default function OrdersPage() {
                       )}
                     </td>
 
+                    {/* DATE */}
                     <td className="p-2 text-center text-sm">
                       {format(new Date(order.createdAt), "dd/MM/yyyy HH:mm")}
                     </td>
 
+                    {/* ACTIONS */}
                     <td className="p-2 flex gap-2 justify-center">
                       <button
                         onClick={() => deleteOrder(order._id)}

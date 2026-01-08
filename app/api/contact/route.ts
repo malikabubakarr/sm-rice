@@ -1,15 +1,15 @@
 // app/api/contact/route.ts
-
-export const dynamic = "force-dynamic";
-export const runtime = "nodejs"; // ✅ REQUIRED for MongoDB
-
 import { NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
+
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
 
 // ---------------- CREATE CONTACT ----------------
 export async function POST(req: Request) {
   try {
-    const data = await req.json();
+    const data: { name?: string; email?: string; message?: string } = await req.json();
 
     if (!data?.name || !data?.email || !data?.message) {
       return NextResponse.json(
@@ -21,7 +21,7 @@ export async function POST(req: Request) {
     const client = await clientPromise;
     const db = client.db("SmRice");
 
-    const result = await db.collection("contact").insertOne({
+    await db.collection("contact").insertOne({
       name: data.name.trim(),
       email: data.email.trim(),
       message: data.message.trim(),
@@ -31,8 +31,8 @@ export async function POST(req: Request) {
     return NextResponse.json({
       success: true,
       contact: {
-        email: data.email.trim(),
         name: data.name.trim(),
+        email: data.email.trim(),
         message: data.message.trim(),
       },
     });
@@ -58,9 +58,9 @@ export async function GET() {
       .toArray();
 
     const formattedContacts = contacts.map((c: any) => ({
-      name: c.name || "",
-      email: c.email || "",
-      message: c.message || "",
+      name: c.name ?? "",
+      email: c.email ?? "",
+      message: c.message ?? "",
       createdAt: c.createdAt ? new Date(c.createdAt).toISOString() : null,
     }));
 
@@ -77,9 +77,9 @@ export async function GET() {
 // ---------------- DELETE CONTACT ----------------
 export async function DELETE(req: Request) {
   try {
-    const { email } = await req.json();
+    const data: { email?: string } = await req.json();
 
-    if (!email) {
+    if (!data?.email) {
       return NextResponse.json(
         { success: false, error: "Email is required to delete contact" },
         { status: 400 }
@@ -90,7 +90,7 @@ export async function DELETE(req: Request) {
     const db = client.db("SmRice");
 
     const result = await db.collection("contact").deleteOne({
-      email: email.trim(),
+      email: data.email.trim(),
     });
 
     if (result.deletedCount === 0) {
