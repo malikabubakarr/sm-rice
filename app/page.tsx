@@ -4,7 +4,7 @@ import Link from "next/link";
 /* ✅ FETCH PRODUCTS FROM DB */
 async function getProducts() {
   // Use environment variable or fallback to localhost
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "mongodb+srv://SMRICE:SMRICE123@cluster0.b3nqtkq.mongodb.net/SmRice?retryWrites=true&w=majority";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
   const res = await fetch(`${baseUrl}/api/products?limit=5`, { cache: "no-store" });
 
