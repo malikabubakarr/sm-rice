@@ -17,8 +17,7 @@ export default function Home() {
 
   useEffect(() => {
     const getProducts = async () => {
-      const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-      const res = await fetch(`${baseUrl}/api/products?limit=5`, { cache: "no-store" });
+      const res = await fetch(`/api/products?limit=5`, { cache: "no-store" });
       if (!res.ok) {
         console.error("Failed to fetch products:", res.statusText);
         return;
@@ -30,7 +29,7 @@ export default function Home() {
     getProducts();
   }, []);
 
-  // Scroll-based parallax for hero background
+  // Scroll-based parallax for hero background (desktop only)
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 1000], [0, -100]);
 
@@ -40,11 +39,13 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative text-white py-28 flex items-center justify-center" style={{ minHeight: "600px" }}>
         <motion.div className="absolute inset-0" style={{ y }}>
-          <div className="w-56 h-auto">
+          <div className="w-full h-full">
             <Image src="/herodekstopbg.jpg" alt="Hero Background Desktop" fill className="hidden md:block object-cover" priority />
-            </div>
-          <Image src="/herobg-mobile.jpg" alt="Hero Background Mobile" fill className="md:hidden object-cover" priority />
+          </div>
         </motion.div>
+        <div className="absolute inset-0 md:hidden">
+          <Image src="/herobg-mobile.jpg" alt="Hero Background Mobile" fill className="object-cover" priority />
+        </div>
         <div className="absolute inset-0 bg-black/40"></div>
 
         {/* Mobile Hero Content */}
@@ -414,7 +415,7 @@ export default function Home() {
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
               >
-                 It's Time To Make Rice!
+                   It's Time To Make Rice!
               </motion.h2>
               
               <motion.p 
