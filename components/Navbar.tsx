@@ -64,9 +64,7 @@ export default function Navbar() {
 
   return (
     <header
-      className={`${
-        bgClass
-      } ${shadowClass} text-white fixed top-0 w-full z-50 transition-all duration-500 ${
+      className={`${bgClass} ${shadowClass} text-white fixed top-0 w-full z-50 transition-all duration-500 ${
         hideNavbar ? "-translate-y-full" : "translate-y-0"
       }`}
     >
@@ -76,10 +74,7 @@ export default function Navbar() {
         {/* Desktop */}
         <div className="hidden md:flex items-center">
           <div className="flex-1 flex justify-start">
-            <Link
-              href="/"
-              className="hover:opacity-80 transition-all duration-300 transform hover:scale-105"
-            >
+            <Link href="/" className="hover:opacity-80 transition-all duration-300 transform hover:scale-105">
               <img
                 src="/logo.png"
                 alt="S.M Rice Logo"
@@ -90,11 +85,11 @@ export default function Navbar() {
 
           <div className="flex-1 flex justify-center">
             <nav className="flex space-x-8">
-              {["products","about","contact","blog"].map((link) => (
+              {["products", "about", "contact", "blog"].map((link) => (
                 <Link
                   key={link}
                   href={`/${link}`}
-                  className="relative hover:text-[#E5D3B3] transition-all duration-300 text-sm font-light group"
+                  className="relative hover:text-[#E5D3B3] transition-all duration-300 text-sm font-light group px-3 py-2 rounded-md hover:bg-white/10"
                 >
                   {link.charAt(0).toUpperCase() + link.slice(1)}
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#E5D3B3] transition-all duration-300 group-hover:w-full" />
@@ -119,11 +114,11 @@ export default function Navbar() {
 
         {/* Mobile */}
         <div className="md:hidden flex flex-col">
-          <div className="flex items-center justify-between relative">
+          <div className="flex items-center justify-between relative min-h-[3rem]">
             {/* Hamburger */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition absolute left-0"
+              className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition absolute left-0 z-10"
             >
               ☰
             </button>
@@ -137,15 +132,15 @@ export default function Navbar() {
               />
             </Link>
 
-            {/* Cart */}
-            <div className="absolute right-0">
+            {/* Cart — FIXED */}
+            <div className="absolute right-0 top-1/2 -translate-y-1/2 z-10">
               <CartButton />
             </div>
           </div>
 
-          {/* Mobile menu + search bar */}
+          {/* Mobile menu */}
           {isMobileMenuOpen && (
-            <div className="mt-2 bg-[#3E2917] text-white rounded-lg p-4 space-y-2">
+            <div className="mt-2 bg-[#3E2917] text-white rounded-lg p-4 space-y-2 shadow-lg">
               <input
                 type="text"
                 placeholder="Search products..."
@@ -153,11 +148,11 @@ export default function Navbar() {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full px-4 py-2 rounded-full bg-white/20 backdrop-blur-md text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-[#E5D3B3] shadow-md border border-white/20 text-sm"
               />
-              {["products","about","contact","blog"].map((link) => (
+              {["products", "about", "contact", "blog"].map((link) => (
                 <Link
                   key={link}
                   href={`/${link}`}
-                  className="block text-sm font-light"
+                  className="block text-sm font-light px-4 py-3 rounded-md bg-white/10 hover:bg-white/20 transition-all duration-300 text-center"
                 >
                   {link.charAt(0).toUpperCase() + link.slice(1)}
                 </Link>

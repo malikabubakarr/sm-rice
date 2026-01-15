@@ -80,11 +80,12 @@ export default function About() {
                   About S.M Rice Trading
                 </h1>
                 <p className="text-[#6B5135] text-sm md:text-base leading-relaxed mb-6">
-                  S.M Rice Trading is a premier rice supplier dedicated to delivering premium quality Pakistani rice worldwide. With a commitment to purity, excellence, and sustainability, we have become a trusted partner for wholesalers, exporters, and retailers globally.
+                  S.M Rice Trading is one of the <strong>best rice traders in Pakistan</strong>, delivering premium basmati and non-basmati rice to customers worldwide. Our top-quality varieties include <strong>Kainat Sella</strong>, <strong>Nayab Sella</strong>, and authentic Basmati rice. Whether you're looking for <strong>online rice ordering</strong> or trusted rice exporters, SM Rice ensures every grain meets the highest standards of taste and freshness.
                 </p>
                 <p className="text-[#6B5135] text-sm md:text-base leading-relaxed">
-                  Our journey began in 2019, rooted in the fertile lands of Punjab, Pakistan. Over the years, we've grown from a local trader to an international brand, supplying rice to some of the world's most renowned food companies.
+                  Founded in 2019, our journey from a local rice trader in Lahore to a global supplier showcases our dedication to quality, consistency, and sustainability. Today, we are recognized among the <strong>top rice traders in Pakistan</strong> for our commitment to excellence in rice trading and exporting.
                 </p>
+
               </div>
 
               {/* Video Section */}
@@ -107,7 +108,7 @@ export default function About() {
               Our History
             </h2>
             <p className="text-[#6B5135] text-sm md:text-base leading-relaxed max-w-4xl mx-auto text-center">
-              Founded in 2019 by Mr. Salman Cheema & Mr. Noman Cheema. S.M Rice Trading started as a small family business in Lahore, Pakistan. What began as a passion for quality rice has evolved into a global enterprise. We specialize in sourcing, processing, and exporting basmati and non-basmati rice, ensuring every grain meets international standards. Our dedication to innovation and customer satisfaction has propelled us to serve markets across Asia, Europe, and the Middle East.
+              Founded in 2019 by Mr. Salman Cheema & Mr. Noman Cheema, S.M Rice Trading began as a small family business in Lahore, Pakistan. Over the years, we've become one of the most trusted <strong>rice traders in Pakistan</strong>, specializing in premium Kainat Sella, Nayab Sella, and Basmati rice. Our rice reaches wholesalers, exporters, and retailers around the globe, offering unmatched quality and flavor.
             </p>
           </section>
 
@@ -131,7 +132,7 @@ export default function About() {
                   Our Location
                 </h2>
                 <p className="text-[#6B5135] text-sm md:text-base leading-relaxed mb-4">
-                  Based in the heart of Punjab, Pakistan, S.M Rice Trading operates from our state-of-the-art facility in Lahore. Punjab's fertile soil and ideal climate make it the perfect region for cultivating the finest rice varieties. Our location allows us to maintain direct oversight of the supply chain, from farm to export.
+                  Based in the heart of Punjab, Pakistan, S.M Rice Trading operates from our state-of-the-art facility in Lahore. Punjab's fertile soil and ideal climate make it the perfect region for cultivating the finest rice varieties like Kainat Sella, Nayab Sella, and Basmati. Our location ensures quality control and timely delivery for all <strong>online rice orders</strong> and bulk exports.
                 </p>
                 <p className="text-[#6B5135] text-sm md:text-base leading-relaxed">
                   Address: Samnabad main Los nala road Lahore, Pakistan<br />
@@ -183,7 +184,7 @@ export default function About() {
               Our Products
             </h2>
             <p className="text-[#6B5135] text-sm md:text-base leading-relaxed max-w-4xl mx-auto text-center mb-10">
-              We offer a wide range of premium rice varieties, each carefully selected for taste, texture, and nutritional value. Our products cater to diverse culinary needs, from everyday meals to gourmet dishes.
+              We offer a wide range of premium <strong>Pakistani rice</strong> including Kainat Sella, Nayab Sella, and Basmati. Our <strong>best rice</strong> varieties cater to wholesalers, exporters, and online customers looking for high-quality rice in Pakistan.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {/* Product Cards */}
@@ -224,7 +225,7 @@ export default function About() {
               Join Our Journey
             </h2>
             <p className="text-[#6B5135] text-sm md:text-base leading-relaxed mb-8">
-              Interested in partnering with us or learning more? Reach out today to discover how S.M Rice Trading can elevate your business.
+              Interested in partnering with us or learning more? Reach out today to discover how S.M Rice Trading, one of the <strong>top rice traders in Pakistan</strong>, can provide premium Kainat Sella, Nayab Sella, and Basmati rice for your business.
             </p>
             <Link
               href="/contact"

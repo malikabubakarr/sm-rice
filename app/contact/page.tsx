@@ -78,7 +78,7 @@ export default function ContactPage() {
                 <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
               </svg>
             </div>
-            <h1 className="text-4xl md:text-5xl font-light text-[#5B3A1E] tracking-tight mb-4 animate-fade-in">
+            <h1 className="text-4xl md:text-5xl font-light text-[#5B3A1E] tracking-tight mb-4">
               Contact Us
             </h1>
             <p className="text-sm md:text-base text-[#6B5135] max-w-2xl mx-auto leading-relaxed">
@@ -89,7 +89,7 @@ export default function ContactPage() {
 
         {/* Contact Section */}
         <section className="px-6 pb-20 relative z-10">
-          <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 animate-slide-up">
+          <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12">
 
             {/* Contact Info */}
             <div className="space-y-8">
