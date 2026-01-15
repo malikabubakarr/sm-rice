@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import Head from "next/head";
+
 
 interface Product {
   _id: string;
@@ -34,6 +36,42 @@ export default function Home() {
   const y = useTransform(scrollY, [0, 1000], [0, -100]);
 
   return (
+    <>
+  <Head>
+    <title>SM Rice Pakistan | Premium Quality Rice for Home & Export</title>
+
+    <meta
+      name="description"
+      content="SM Rice Pakistan offers premium quality basmati and non-basmati rice for home cooking and export. Trusted for purity, taste, and excellence."
+    />
+
+    <meta
+      name="keywords"
+      content="SM Rice, basmati rice Pakistan, premium rice, rice exporter Pakistan, buy rice online, Pakistani rice"
+    />
+
+    <meta name="author" content="SM Rice Pakistan" />
+    <meta name="robots" content="index, follow" />
+
+    {/* Open Graph / Facebook / WhatsApp */}
+    <meta property="og:title" content="SM Rice Pakistan | Premium Quality Rice" />
+    <meta
+      property="og:description"
+      content="Premium quality Pakistani rice for home and export. Trusted for purity and excellence."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/logo.png" />
+
+    {/* Twitter */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="SM Rice Pakistan | Premium Quality Rice" />
+    <meta
+      name="twitter:description"
+      content="Premium quality Pakistani rice for home and export. Trusted for purity and excellence."
+    />
+    <meta name="twitter:image" content="/logo.png" />
+  </Head>
+
     <main className="bg-[#F5F0E6] min-h-screen">
 
       {/* Hero Section */}
@@ -372,68 +410,82 @@ export default function Home() {
 
 
       {/* --- Blog/Tips Feature Section --- */}
-      <motion.section 
-        className="py-16 px-6 bg-[#F5F0E6]"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
+<motion.section 
+  className="py-16 px-6 bg-[#F5F0E6]"
+  initial={{ opacity: 0 }}
+  whileInView={{ opacity: 1 }}
+  transition={{ duration: 0.8 }}
+  viewport={{ once: true }}
+>
+  <div className="max-w-7xl mx-auto">
+    <div className="relative grid md:grid-cols-2 gap-10 items-center">
+      
+      {/* Image on the left */}
+      <motion.div 
+        className="relative h-96 w-full rounded-2xl overflow-hidden shadow-2xl"
+        initial={{ opacity: 0, x: -50 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+        whileHover={{ scale: 1.05 }}
+      >
+        <Image 
+          src="/pinterest.jpg" 
+          alt="Perfectly Cooked Rice" 
+          fill
+          className="transition-transform duration-500 hover:scale-105 object-cover"
+        />
+      </motion.div>
+      
+      {/* Text Card on the right */}
+      <motion.div 
+        className="relative p-8 lg:p-12 bg-white rounded-2xl shadow-xl border border-[#F5F0E6] h-full flex flex-col justify-center"
+        initial={{ opacity: 0, x: 50 }}
+        whileInView={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8 }}
         viewport={{ once: true }}
       >
-        <div className="max-w-7xl mx-auto">
-          <div className="relative grid md:grid-cols-2 gap-10 items-center">
-            
-            {/* Image on the left (ObjectFit="cover" is appropriate for feature images) */}
-            <motion.div 
-              className="relative h-96 w-full rounded-2xl overflow-hidden shadow-2xl"
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              whileHover={{ scale: 1.05 }}
-            >
-              <Image 
-                src="/pinterest.jpg" 
-                alt="Perfectly Cooked Rice" 
-                fill
-                className="transition-transform duration-500 hover:scale-105 object-cover"
-              />
-            </motion.div>
-            
-            {/* Text Card on the right - CLEANER TEXT */}
-            <motion.div 
-              className="relative p-8 lg:p-12 bg-white rounded-2xl shadow-xl border border-[#F5F0E6] h-full flex flex-col justify-center"
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              
-              <motion.h2 
-                className="text-3xl font-bold text-[#5B3A1E] mb-4"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true }}
-              >
-                   It's Time To Make Rice!
-              </motion.h2>
-              
-              <motion.p 
-                className="text-[#6B5135] text-base leading-relaxed mb-8"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                viewport={{ once: true }}
-              >
-                Turn on the stove and put these tips into practice to elevate your meals any day of the week! Discover food trends, cooking hacks, and even fun facts about your favorite rice and quinoa in our blog, <strong>The Kitchen</strong>.
-              </motion.p>
-              
-              <Link
-                href="/blog"
-                className="inline-block self-start bg-[#E5D3B3] text-[#5B3A1E] px-8 py-3 rounded-full font-medium hover:bg-[#6B4A2E] hover:text-white transition-colors duration-300 shadow-md"
-              >
-                View Blog
-              </Link>
+        <motion.h2 
+          className="text-3xl font-bold text-[#5B3A1E] mb-4"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
+          How to Cook Perfect Kainat Rice
+        </motion.h2>
+        
+        <motion.p 
+          className="text-[#6B5135] text-base leading-relaxed mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: true }}
+        >
+          <strong>Step 1: Rice Soaking</strong><br />
+          Soak Kainat Double Steam Rice in lukewarm water for <strong>40 minutes</strong>. This softens the grains and ensures they expand properly during cooking.
+          <br /><br />
+          <strong>Step 2: Water Ratio</strong><br />
+          The amount of water depends on the rice crop:<br />
+          • <strong>New Crop Rice:</strong> Use an equal amount of water to rice (1:1 ratio).<br />
+          • <strong>Old Crop Rice:</strong> Use 1 to 1.5 times more water than rice (1:1.5 ratio) to make it soft and evenly cooked.
+          <br /><br />
+          <strong>Step 3: Cooking Method</strong><br />
+          • Add rice and water to a pot and cook on medium flame.<br />
+          • Once the water is absorbed and the rice is soft, turn off the heat.<br />
+          • Let it rest for <strong>10 minutes</strong> with a lid on to allow the grains to fully set.
+          <br /><br />
+          <strong>Tips for Other Varieties:</strong><br />
+          • <strong>Kainat White Rice (Kachi Kainat):</strong> Follow the same soaking and cooking instructions.<br />
+          • <strong>Kainat Sella Rice:</strong> Soak for <strong>2 hours</strong> and use <strong>double the water</strong> for best results.
+        </motion.p>
+        
+        <Link
+          href="/blog"
+          className="inline-block self-start bg-[#E5D3B3] text-[#5B3A1E] px-8 py-3 rounded-full font-medium hover:bg-[#6B4A2E] hover:text-white transition-colors duration-300 shadow-md"
+        >
+          View Blog
+        </Link>
 
               {/* Optional rice grain graphics */}
               <div className="absolute top-4 right-4 text-4xl opacity-30 text-[#5B3A1E] hidden sm:block">🍚</div>
@@ -551,5 +603,6 @@ export default function Home() {
       {/* --- END: About Preview Section --- */}
 
     </main>
-  );
+  </>
+);
 }
