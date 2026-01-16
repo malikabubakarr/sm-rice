@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Head from "next/head";
 
-
 interface Product {
   _id: string;
   name: string;
@@ -37,170 +36,173 @@ export default function Home() {
 
   return (
     <>
-  <Head>
-    <title>SM Rice Pakistan | Premium Quality Rice for Home & Export</title>
+      <Head>
+        <title>SM Rice Pakistan | Premium Quality Rice for Home & Export</title>
 
-    <meta
-      name="description"
-      content="SM Rice Pakistan offers premium quality basmati and non-basmati rice for home cooking and export. Trusted for purity, taste, and excellence."
-    />
+        <meta
+          name="description"
+          content="SM Rice Pakistan offers premium quality basmati and non-basmati rice for home cooking and export. Trusted for purity, taste, and excellence."
+        />
 
-    <meta
-      name="keywords"
-      content="SM Rice, basmati rice Pakistan, premium rice, rice exporter Pakistan, buy rice online, Pakistani rice"
-    />
+        <meta
+          name="keywords"
+          content="SM Rice, basmati rice Pakistan, premium rice, rice exporter Pakistan, buy rice online, Pakistani rice"
+        />
 
-    <meta name="author" content="SM Rice Pakistan" />
-    <meta name="robots" content="index, follow" />
+        <meta name="author" content="SM Rice Pakistan" />
+        <meta name="robots" content="index, follow" />
 
-    {/* Open Graph / Facebook / WhatsApp */}
-    <meta property="og:title" content="SM Rice Pakistan | Premium Quality Rice" />
-    <meta
-      property="og:description"
-      content="Premium quality Pakistani rice for home and export. Trusted for purity and excellence."
-    />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="/logo.png" />
+        {/* Open Graph / Facebook / WhatsApp */}
+        <meta property="og:title" content="SM Rice Pakistan | Premium Quality Rice" />
+        <meta
+          property="og:description"
+          content="Premium quality Pakistani rice for home and export. Trusted for purity and excellence."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="/logo.png" />
 
-    {/* Twitter */}
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="SM Rice Pakistan | Premium Quality Rice" />
-    <meta
-      name="twitter:description"
-      content="Premium quality Pakistani rice for home and export. Trusted for purity and excellence."
-    />
-    <meta name="twitter:image" content="/logo.png" />
-  </Head>
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="SM Rice Pakistan | Premium Quality Rice" />
+        <meta
+          name="twitter:description"
+          content="Premium quality Pakistani rice for home and export. Trusted for purity and excellence."
+        />
+        <meta name="twitter:image" content="/logo.png" />
+      </Head>
 
-    <main className="bg-[#F5F0E6] min-h-screen">
-
-{/* Hero Section */}
-<section className="relative text-white h-screen flex items-center justify-center overflow-hidden bg-[#F8F3E8]">
-  <motion.div className="absolute inset-0" style={{ y }}>
-    <div className="w-full h-full">
-      <Image src="/herodekstop1bg.jpg" alt="Hero Background Desktop" fill className="hidden md:block object-cover object-center" priority />
-    </div>
-  </motion.div>
-  <div className="absolute inset-0 md:hidden">
-    <Image src="/herobg-mobile.jpg" alt="Hero Background Mobile" fill className="object-cover object-center" priority />
-  </div>
-  <div className="absolute inset-0 bg-black/40"></div>
-
-  {/* Mobile Hero Content */}
-  <div className="absolute bottom-12 left-0 right-0 z-10 md:hidden">
-    <div className="max-w-6xl mx-auto px-6 text-center">
-      <div className="md:max-w-xl">
-        {/* Animated Brand Heading */}
-        <motion.h1 
-          className="text-3xl font-semibold tracking-wide text-[#F8F3E8] drop-shadow-lg
-          transition-all duration-500
-          hover:tracking-widest hover:scale-105"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <motion.span 
-            className="text-[#E5D3B3] font-extrabold
-            inline-block transition-transform duration-500 hover:rotate-2"
-            whileHover={{ rotate: 5 }}
-          >
-            SM
-          </motion.span>{" "}
-          <motion.span 
-            className="inline-block transition-all duration-500 hover:-rotate-1"
-            whileHover={{ rotate: -3 }}
-          >
-            RICE
-          </motion.span>
-        </motion.h1>
-
-        {/* Animated Tagline */}
-        <motion.p 
-          className="mt-2 text-sm text-[#F1E7D3] leading-relaxed font-light
-          transition-all duration-500
-          hover:text-[#E5D3B3] hover:scale-[1.02]"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          Premium Pakistani Rice for Home and Wholesale Buyers —{" "}
-          <motion.span 
-            className="font-medium text-[#E5D3B3]
-            inline-block transition-all duration-500
-            hover:text-white hover:underline underline-offset-4"
-            whileHover={{ scale: 1.05 }}
-          >
-            Trusted for Purity & Export Excellence
-          </motion.span>
-        </motion.p>
-
-        {/* CTA Buttons (unchanged) */}
-        <motion.div 
-          className="mt-6 flex flex-wrap gap-4 justify-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-        >
-          <Link
-            href="/products"
-            className="bg-[#E5D3B3] text-[#5B3A1E] px-6 py-2 rounded-full text-sm font-medium
-            hover:bg-[#6B4A2E] hover:text-white transition-all shadow-md hover:shadow-lg"
-          >
-            Explore Products
-          </Link>
-          <Link
-            href="/about"
-            className="border border-[#E5D3B3] text-[#E5D3B3] px-6 py-2 rounded-full text-sm font-medium
-            hover:bg-[#E5D3B3] hover:text-[#5B3A1E] transition-all shadow-md hover:shadow-lg"
-          >
-            About Us
-          </Link>
+      <main className="bg-[#F5F0E6] min-h-screen">
+      {/* Hero Section */}
+      <section className="relative text-white py-28 flex items-center justify-center" style={{ minHeight: "600px" }}>
+        <motion.div className="absolute inset-0" style={{ y }}>
+          <div className="w-full h-full">
+            <Image src="/herodekstop1bg.jpg" alt="Hero Background Desktop" fill className="hidden md:block object-cover" priority />
+          </div>
         </motion.div>
-      </div>
-    </div>
-  </div>
+        <div className="absolute inset-0 md:hidden">
+          <Image src="/herobg-mobile.jpg" alt="Hero Background Mobile" fill className="object-cover" priority />
+        </div>
+        <div className="absolute inset-0 bg-black/40"></div>
 
-  {/* Desktop Hero Content */}
-  <motion.div 
-    className="hidden md:block absolute left-12 top-1/2 transform -translate-y-1/2 z-10"
-    initial={{ opacity: 0, x: -50 }}
-    animate={{ opacity: 1, x: 0 }}
-    transition={{ duration: 0.8 }}
-  >
-    <div className="max-w-md text-left">
+        {/* Mobile Hero Content */}
+<div className="absolute bottom-12 left-0 right-0 z-10 md:hidden">
+  <div className="max-w-6xl mx-auto px-6 text-center">
+    <div className="md:max-w-xl">
+
+      {/* Animated Brand Heading */}
       <motion.h1 
-        className="text-4xl font-semibold tracking-wide text-[#F8F3E8] drop-shadow-lg"
-        initial={{ opacity: 0, y: 20 }}
+        className="text-3xl font-semibold tracking-wide text-[#F8F3E8] drop-shadow-lg
+        transition-all duration-500
+        hover:tracking-widest hover:scale-105"
+        initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
+        transition={{ duration: 0.8 }}
       >
-        <span className="text-[#E5D3B3] font-extrabold">S.M</span> RICE
+        <motion.span 
+          className="text-[#E5D3B3] font-extrabold
+          inline-block transition-transform duration-500 hover:rotate-2"
+          whileHover={{ rotate: 5 }}
+        >
+          SM
+        </motion.span>{" "}
+        <motion.span 
+          className="inline-block transition-all duration-500 hover:-rotate-1"
+          whileHover={{ rotate: -3 }}
+        >
+          RICE
+        </motion.span>
       </motion.h1>
+
+      {/* Animated Tagline */}
       <motion.p 
-        className="mt-3 text-lg text-[#F1E7D3] leading-relaxed font-light"
-        initial={{ opacity: 0, y: 20 }}
+        className="mt-2 text-sm text-[#F1E7D3] leading-relaxed font-light
+        transition-all duration-500
+        hover:text-[#E5D3B3] hover:scale-[1.02]"
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.4 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
       >
         Premium Quality Pakistani Rice —{" "}
-        <span className="font-medium text-[#E5D3B3]">Trusted for Purity & Export Excellence</span>
+        <motion.span 
+          className="font-medium text-[#E5D3B3]
+          inline-block transition-all duration-500
+          hover:text-white hover:underline underline-offset-4"
+          whileHover={{ scale: 1.05 }}
+        >
+          Trusted for Purity & Export Excellence
+        </motion.span>
       </motion.p>
+
+      {/* CTA Buttons (unchanged) */}
       <motion.div 
-        className="mt-8 flex gap-4 justify-start"
+        className="mt-6 flex flex-wrap gap-4 justify-center"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.6 }}
+        transition={{ duration: 0.8, delay: 0.4 }}
       >
-        <Link href="/products" className="bg-[#E5D3B3] text-[#5B3A1E] px-8 py-3 rounded-full text-base font-medium hover:bg-[#6B4A2E] hover:text-white transition-all shadow-md hover:shadow-lg">
+        <Link
+          href="/products"
+          className="bg-[#E5D3B3] text-[#5B3A1E] px-6 py-2 rounded-full text-sm font-medium
+          hover:bg-[#6B4A2E] hover:text-white transition-all shadow-md hover:shadow-lg"
+        >
           Explore Products
         </Link>
-        <Link href="/about" className="border border-[#E5D3B3] text-[#E5D3B3] px-8 py-3 rounded-full text-base font-medium hover:bg-[#E5D3B3] hover:text-[#5B3A1E] transition-all shadow-md hover:shadow-lg">
+        <Link
+          href="/about"
+          className="border border-[#E5D3B3] text-[#E5D3B3] px-6 py-2 rounded-full text-sm font-medium
+          hover:bg-[#E5D3B3] hover:text-[#5B3A1E] transition-all shadow-md hover:shadow-lg"
+        >
           About Us
         </Link>
       </motion.div>
+
     </div>
-  </motion.div>
-</section>
+  </div>
+</div>
+
+
+        {/* Desktop Hero Content */}
+        <motion.div 
+          className="hidden md:block absolute left-12 top-1/2 transform -translate-y-1/2 z-10"
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="max-w-md text-left">
+            <motion.h1 
+              className="text-4xl font-semibold tracking-wide text-[#F8F3E8] drop-shadow-lg"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <span className="text-[#E5D3B3] font-extrabold">S.M</span> RICE
+            </motion.h1>
+            <motion.p 
+              className="mt-3 text-lg text-[#F1E7D3] leading-relaxed font-light"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              Premium Quality Pakistani Rice —{" "}
+              <span className="font-medium text-[#E5D3B3]">Trusted for Purity & Export Excellence</span>
+            </motion.p>
+            <motion.div 
+              className="mt-8 flex gap-4 justify-start"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+            >
+              <Link href="/products" className="bg-[#E5D3B3] text-[#5B3A1E] px-8 py-3 rounded-full text-base font-medium hover:bg-[#6B4A2E] hover:text-white transition-all shadow-md hover:shadow-lg">
+                Explore Products
+              </Link>
+              <Link href="/about" className="border border-[#E5D3B3] text-[#E5D3B3] px-8 py-3 rounded-full text-base font-medium hover:bg-[#E5D3B3] hover:text-[#5B3A1E] transition-all shadow-md hover:shadow-lg">
+                About Us
+              </Link>
+            </motion.div>
+          </div>
+        </motion.div>
+      </section>
+
 
 {/* --- Product Grid Section --- */}
 <motion.section 
