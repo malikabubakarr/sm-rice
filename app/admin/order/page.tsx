@@ -24,10 +24,10 @@ type Order = {
   _id: string;
   name: string;
   phone: string;
-  email: string;
+  email?: string;
   address: OrderAddress | null;
   products: OrderProduct[];
-  totalAmount: number;
+  totalAmount?: number | null; // ✅ FIXED TYPE
   status: string;
   createdAt: string;
 };
@@ -70,21 +70,18 @@ export default function OrdersPage() {
       });
 
       const data = await res.json();
-
       if (data.success) fetchOrders();
-      else alert("Failed to update status: " + (data.error || "Unknown error"));
+      else alert(data.error || "Failed to update status");
     } catch (err) {
-      console.error("Update status error:", err);
+      console.error(err);
       alert("Error updating status");
     }
-
     setUpdating(null);
   };
 
   /* ---------- DELETE ORDER ---------- */
   const deleteOrder = async (id: string) => {
     if (!confirm("Are you sure you want to delete this order?")) return;
-
     setDeleting(id);
 
     try {
@@ -95,11 +92,10 @@ export default function OrdersPage() {
       });
 
       const data = await res.json();
-
       if (data.success) fetchOrders();
-      else alert("Failed to delete order: " + (data.error || "Unknown error"));
+      else alert(data.error || "Failed to delete order");
     } catch (err) {
-      console.error("Delete order error:", err);
+      console.error(err);
       alert("Error deleting order");
     }
 
@@ -109,7 +105,9 @@ export default function OrdersPage() {
   /* ---------- UI ---------- */
   return (
     <div className="p-4 md:p-6 min-h-screen bg-gray-100">
-      <h1 className="text-2xl font-bold text-[#5B3A1E] mb-6">Manage Orders</h1>
+      <h1 className="text-2xl font-bold text-[#5B3A1E] mb-6">
+        Manage Orders
+      </h1>
 
       {loading ? (
         <p>Loading orders...</p>
@@ -140,11 +138,20 @@ export default function OrdersPage() {
                   0
                 );
 
+                // ✅ SAFE TOTAL (NO CRASH)
+                const totalAmount =
+                  typeof order.totalAmount === "number"
+                    ? order.totalAmount
+                    : order.products.reduce(
+                        (sum, p) => sum + p.price * p.quantity,
+                        0
+                      );
+
                 return (
                   <tr key={order._id} className="hover:bg-gray-50">
                     {/* PRODUCTS */}
                     <td className="p-2 font-medium">
-                      {order.products.map((p) => p.productName).join(", ")}
+                      {order.products.map(p => p.productName).join(", ")}
                     </td>
 
                     {/* NAME */}
@@ -157,13 +164,11 @@ export default function OrdersPage() {
                     <td className="p-2">{order.email || "—"}</td>
 
                     {/* ADDRESS */}
-                    <td className="p-2 text-sm leading-5">
+                    <td className="p-2 text-sm">
                       {order.address ? (
                         <>
-                          {order.address.street}
-                          <br />
-                          {order.address.city}, {order.address.province}
-                          <br />
+                          {order.address.street}<br />
+                          {order.address.city}, {order.address.province}<br />
                           {order.address.country} — {order.address.postalCode}
                         </>
                       ) : (
@@ -171,12 +176,12 @@ export default function OrdersPage() {
                       )}
                     </td>
 
-                    {/* TOTAL QTY */}
+                    {/* QTY */}
                     <td className="p-2 text-center">{totalQty}</td>
 
                     {/* TOTAL PRICE */}
-                    <td className="p-2 text-center">
-                      ₨{order.totalAmount.toLocaleString("en-PK")}
+                    <td className="p-2 text-center font-semibold">
+                      ₨{totalAmount.toLocaleString("en-PK")}
                     </td>
 
                     {/* STATUS */}
@@ -196,7 +201,7 @@ export default function OrdersPage() {
                       </select>
 
                       {updating === order._id && (
-                        <span className="ml-2 text-sm text-gray-500">
+                        <span className="ml-2 text-xs text-gray-500">
                           Updating...
                         </span>
                       )}
@@ -208,11 +213,11 @@ export default function OrdersPage() {
                     </td>
 
                     {/* ACTIONS */}
-                    <td className="p-2 flex gap-2 justify-center">
+                    <td className="p-2 flex justify-center">
                       <button
                         onClick={() => deleteOrder(order._id)}
                         disabled={deleting === order._id}
-                        className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition disabled:opacity-50"
+                        className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 disabled:opacity-50"
                       >
                         {deleting === order._id ? "Deleting..." : "Delete"}
                       </button>

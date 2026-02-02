@@ -122,7 +122,7 @@ export default function Home() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
       >
-        Premium Quality Pakistani Rice —{" "}
+        Premium Pakistani Rice for Home and Wholesale Buyers —{" "}
         <motion.span 
           className="font-medium text-[#E5D3B3]
           inline-block transition-all duration-500

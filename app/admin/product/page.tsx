@@ -2,13 +2,17 @@
 
 import { useEffect, useState } from "react";
 
+/* ---------- TYPES ---------- */
+
 type Product = {
   _id: string;
   name: string;
   description: string;
-  price?: number;
+  price?: number | string | null; // ✅ FIXED
   img?: string;
 };
+
+/* ---------- COMPONENT ---------- */
 
 export default function ProductPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -19,7 +23,7 @@ export default function ProductPage() {
   const [img, setImg] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Fetch products
+  /* ---------- FETCH PRODUCTS ---------- */
   const fetchProducts = async () => {
     try {
       const res = await fetch("/api/products");
@@ -36,7 +40,7 @@ export default function ProductPage() {
     fetchProducts();
   }, []);
 
-  // Reset form
+  /* ---------- RESET FORM ---------- */
   const resetForm = () => {
     setEditingId(null);
     setName("");
@@ -45,14 +49,15 @@ export default function ProductPage() {
     setImg("");
   };
 
-  // Add or Update product
+  /* ---------- ADD / UPDATE PRODUCT ---------- */
   const handleSubmit = async () => {
-    if (!name || !description || !price) return alert("Fill all required fields!");
+    if (!name || !description || !price)
+      return alert("Fill all required fields!");
 
     const payload = {
       name,
       description,
-      price: parseFloat(price),
+      price: Number(price), // ✅ ALWAYS NUMBER
       img,
     };
 
@@ -61,7 +66,9 @@ export default function ProductPage() {
       const res = await fetch("/api/products", {
         method: editingId ? "PATCH" : "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(editingId ? { _id: editingId, ...payload } : payload),
+        body: JSON.stringify(
+          editingId ? { _id: editingId, ...payload } : payload
+        ),
       });
 
       const data = await res.json();
@@ -79,7 +86,7 @@ export default function ProductPage() {
     }
   };
 
-  // Delete product
+  /* ---------- DELETE PRODUCT ---------- */
   const handleDelete = async (_id: string) => {
     if (!confirm("Are you sure you want to delete this product?")) return;
 
@@ -89,6 +96,7 @@ export default function ProductPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ _id }),
       });
+
       const data = await res.json();
       if (data.success) fetchProducts();
       else alert("Failed: " + (data.error || "Unknown error"));
@@ -98,20 +106,27 @@ export default function ProductPage() {
     }
   };
 
-  // Start editing
+  /* ---------- EDIT PRODUCT ---------- */
   const handleEdit = (product: Product) => {
     setEditingId(product._id);
     setName(product.name);
     setDescription(product.description);
-    setPrice(product.price?.toString() || "");
+    setPrice(
+      product.price !== null && product.price !== undefined
+        ? product.price.toString()
+        : ""
+    );
     setImg(product.img || "");
   };
 
+  /* ---------- UI ---------- */
   return (
     <div className="min-h-screen bg-[#F5F0E6] p-6 flex flex-col gap-6">
-      <h1 className="text-3xl font-bold text-[#5B3A1E] text-center">Products Admin</h1>
+      <h1 className="text-3xl font-bold text-[#5B3A1E] text-center">
+        Products Admin
+      </h1>
 
-      {/* Add / Edit Product Form */}
+      {/* FORM */}
       <div className="bg-white p-4 rounded shadow flex flex-col md:flex-row gap-3 items-center">
         <input
           type="text"
@@ -160,7 +175,7 @@ export default function ProductPage() {
         )}
       </div>
 
-      {/* Products Table */}
+      {/* TABLE */}
       <div className="overflow-x-auto bg-white shadow rounded">
         <table className="w-full table-auto border-collapse">
           <thead className="bg-[#C19A6B] text-white">
@@ -172,35 +187,57 @@ export default function ProductPage() {
               <th className="p-3 border">Actions</th>
             </tr>
           </thead>
+
           <tbody>
             {products.length > 0 ? (
-              products.map((p) => (
-                <tr key={p._id} className="border-t hover:bg-[#F0E5D8]">
-                  <td className="p-3 font-medium">{p.name}</td>
-                  <td className="p-3">{p.description}</td>
-                  <td className="p-3 font-semibold">PKR {p.price?.toFixed(2)}</td>
-                  <td className="p-3">
-                    {p.img ? <img src={p.img} alt={p.name} className="h-10 object-contain" /> : "-"}
-                  </td>
-                  <td className="p-3 flex gap-2">
-                    <button
-                      onClick={() => handleEdit(p)}
-                      className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => handleDelete(p._id)}
-                      className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))
+              products.map((p) => {
+                // ✅ SAFE PRICE FORMAT
+                const priceNumber = Number(p.price);
+                const displayPrice = isNaN(priceNumber)
+                  ? "0.00"
+                  : priceNumber.toFixed(2);
+
+                return (
+                  <tr key={p._id} className="border-t hover:bg-[#F0E5D8]">
+                    <td className="p-3 font-medium">{p.name}</td>
+                    <td className="p-3">{p.description}</td>
+                    <td className="p-3 font-semibold">
+                      PKR {displayPrice}
+                    </td>
+                    <td className="p-3">
+                      {p.img ? (
+                        <img
+                          src={p.img}
+                          alt={p.name}
+                          className="h-10 object-contain"
+                        />
+                      ) : (
+                        "-"
+                      )}
+                    </td>
+                    <td className="p-3 flex gap-2">
+                      <button
+                        onClick={() => handleEdit(p)}
+                        className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => handleDelete(p._id)}
+                        className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })
             ) : (
               <tr>
-                <td colSpan={5} className="p-4 text-center text-gray-500 italic">
+                <td
+                  colSpan={5}
+                  className="p-4 text-center text-gray-500 italic"
+                >
                   No products yet
                 </td>
               </tr>
