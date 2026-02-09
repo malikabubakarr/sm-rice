@@ -3,13 +3,19 @@
 import Image from "next/image";
 
 const WhatsAppButton = () => {
+  const handleClick = () => {
+    // ✅ Track TikTok Contact event
+    if (window.ttq) {
+      window.ttq.track("Contact");
+    }
+  };
+
   return (
     <a
-      href="https://wa.me/923394021057
-
-"
+      href="https://wa.me/923394021057"
       target="_blank"
       rel="noopener noreferrer"
+      onClick={handleClick}
       className="
         fixed bottom-5 right-5 z-[999]
         flex items-center justify-center
