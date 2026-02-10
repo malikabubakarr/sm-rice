@@ -4,9 +4,13 @@ import Image from "next/image";
 
 const WhatsAppButton = () => {
   const handleClick = () => {
-    // ✅ Track TikTok Contact event
-    if (window.ttq) {
-      window.ttq.track("Contact");
+    // ✅ Track TikTok Contact event with error handling
+    try {
+      if (window.ttq) {
+        window.ttq.track("Contact");
+      }
+    } catch (error) {
+      console.error('TikTok Pixel tracking error:', error);
     }
   };
 

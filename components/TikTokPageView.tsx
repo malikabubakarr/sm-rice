@@ -16,8 +16,12 @@ export default function TikTokPageView() {
     // 🔒 Skip admin panel pages
     if (!pathname || pathname.startsWith("/admin")) return;
 
-    if (window.ttq) {
-      window.ttq.page();
+    try {
+      if (window.ttq) {
+        window.ttq.page();
+      }
+    } catch (error) {
+      console.error('TikTok Pixel tracking error:', error);
     }
   }, [pathname]);
 
