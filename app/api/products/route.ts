@@ -22,11 +22,14 @@ export async function POST(req: Request) {
     const client = await clientPromise;
     const db = client.db("SmRice");
 
+    // ✅ Handle price: Store as string if "N/A", else as number
+    const priceValue = data.price === "N/A" ? "N/A" : Number(data.price) || 0;
+
     const result = await db.collection("products").insertOne({
       name: data.name,
       spec: data.spec,
       img: data.img ?? null,
-      price: Number(data.price) || 0,
+      price: priceValue, // ✅ Now supports "N/A" or number
       createdAt: new Date(),
     });
 
@@ -37,7 +40,7 @@ export async function POST(req: Request) {
         name: data.name,
         spec: data.spec,
         img: data.img ?? null,
-        price: Number(data.price) || 0,
+        price: priceValue,
       },
     });
   } catch (err) {
@@ -68,7 +71,7 @@ export async function GET() {
       name: p.name,
       spec: p.spec,
       img: p.img ?? null,
-      price: p.price ?? 0,
+      price: p.price ?? 0, // ✅ Returns "N/A" or number as stored
       createdAt: p.createdAt ? new Date(p.createdAt).toISOString() : null,
     }));
 
@@ -106,12 +109,16 @@ export async function PATCH(req: Request) {
       );
     }
 
+    // ✅ Handle price: Store as string if "N/A", else as number
+    const priceValue = price === "N/A" ? "N/A" : Number(price) || 0;
+
     const updateData: any = {
       name,
       spec,
-      price: Number(price) || 0,
+      price: priceValue, // ✅ Now supports "N/A" or number
     };
 
+    // ✅ Fixed syntax: Only update img if provided
     if (img !== undefined) updateData.img = img;
 
     const client = await clientPromise;

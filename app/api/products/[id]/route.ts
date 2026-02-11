@@ -30,7 +30,7 @@ export async function GET(req: Request, context: { params: Promise<{ id: string 
         name: product.name,
         spec: product.spec,
         img: product.img ?? null,
-        price: product.price ?? 0,
+        price: product.price ?? 0, // ✅ Returns "N/A" or number as stored
         createdAt: product.createdAt ? product.createdAt.toISOString() : null,
       },
     });
@@ -58,9 +58,12 @@ export async function PATCH(req: Request, context: { params: Promise<{ id: strin
     const client = await clientPromise;
     const db = client.db("SmRice");
 
+    // ✅ Handle price: Store as string if "N/A", else as number
+    const priceValue = price === "N/A" ? "N/A" : Number(price) || 0;
+
     const result = await db.collection("products").updateOne(
       { _id: new ObjectId(id) },
-      { $set: { name, spec, price: Number(price) || 0, ...(img !== undefined ? { img } : {}) } }
+      { $set: { name, spec, price: priceValue, ...(img !== undefined ? { img } : {}) } } // ✅ Fixed syntax
     );
 
     if (result.matchedCount === 0) {

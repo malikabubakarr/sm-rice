@@ -7,8 +7,8 @@ import { useEffect, useState } from "react";
 type Product = {
   _id: string;
   name: string;
-  description: string;
-  price?: number | string | null; // ✅ FIXED
+  spec: string; // ✅ Changed from description to spec
+  price?: number | string | null;
   img?: string;
 };
 
@@ -18,7 +18,7 @@ export default function ProductPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const [spec, setSpec] = useState(""); // ✅ Changed from description to spec
   const [price, setPrice] = useState("");
   const [img, setImg] = useState("");
   const [loading, setLoading] = useState(false);
@@ -44,22 +44,26 @@ export default function ProductPage() {
   const resetForm = () => {
     setEditingId(null);
     setName("");
-    setDescription("");
+    setSpec(""); // ✅ Changed from description to spec
     setPrice("");
     setImg("");
   };
 
   /* ---------- ADD / UPDATE PRODUCT ---------- */
   const handleSubmit = async () => {
-    if (!name || !description || !price)
-      return alert("Fill all required fields!");
+    if (!name || !spec) // ✅ Changed from description to spec
+      return alert("Fill name and spec! Price can be 'N/A' if unavailable.");
+
+    const priceValue = price === "N/A" ? "N/A" : Number(price) || null;
 
     const payload = {
       name,
-      description,
-      price: Number(price), // ✅ ALWAYS NUMBER
+      spec, // ✅ Changed from description to spec
+      price: priceValue,
       img,
     };
+
+    console.log("Submitting payload:", payload); // ✅ Debug log
 
     try {
       setLoading(true);
@@ -74,7 +78,8 @@ export default function ProductPage() {
       const data = await res.json();
       if (data.success) {
         resetForm();
-        fetchProducts();
+        await fetchProducts(); // ✅ Ensure it's awaited
+        alert(editingId ? "Product updated!" : "Product added!");
       } else {
         alert("Failed: " + (data.error || "Unknown error"));
       }
@@ -98,7 +103,7 @@ export default function ProductPage() {
       });
 
       const data = await res.json();
-      if (data.success) fetchProducts();
+      if (data.success) await fetchProducts(); // ✅ Ensure it's awaited
       else alert("Failed: " + (data.error || "Unknown error"));
     } catch (err) {
       console.error("Delete error:", err);
@@ -108,13 +113,14 @@ export default function ProductPage() {
 
   /* ---------- EDIT PRODUCT ---------- */
   const handleEdit = (product: Product) => {
+    console.log("Editing product:", product); // ✅ Debug log
     setEditingId(product._id);
     setName(product.name);
-    setDescription(product.description);
+    setSpec(product.spec); // ✅ Changed from description to spec
     setPrice(
-      product.price !== null && product.price !== undefined
+      product.price !== null && product.price !== undefined && product.price !== "" && product.price !== 0 // ✅ Fixed syntax: added 'undefined'
         ? product.price.toString()
-        : ""
+        : "N/A"
     );
     setImg(product.img || "");
   };
@@ -130,6 +136,7 @@ export default function ProductPage() {
       <div className="bg-white p-4 rounded shadow flex flex-col md:flex-row gap-3 items-center">
         <input
           type="text"
+          name="name" // ✅ Added name attribute
           placeholder="Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -137,20 +144,23 @@ export default function ProductPage() {
         />
         <input
           type="text"
-          placeholder="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          name="spec" // ✅ Added name attribute
+          placeholder="Spec" // ✅ Changed from Description to Spec
+          value={spec} // ✅ Changed from description to spec
+          onChange={(e) => setSpec(e.target.value)} // ✅ Changed from setDescription to setSpec
           className="border p-3 rounded flex-1"
         />
         <input
-          type="number"
-          placeholder="Price"
+          type="text"
+          name="price" // ✅ Added name attribute
+          placeholder="Price (or 'N/A')"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
           className="border p-3 rounded w-32"
         />
         <input
           type="text"
+          name="img" // ✅ Added name attribute
           placeholder="Image URL"
           value={img}
           onChange={(e) => setImg(e.target.value)}
@@ -181,7 +191,7 @@ export default function ProductPage() {
           <thead className="bg-[#C19A6B] text-white">
             <tr>
               <th className="p-3 border">Name</th>
-              <th className="p-3 border">Description</th>
+              <th className="p-3 border">Spec</th> {/* ✅ Changed from Description to Spec */}
               <th className="p-3 border">Price</th>
               <th className="p-3 border">Image</th>
               <th className="p-3 border">Actions</th>
@@ -191,19 +201,16 @@ export default function ProductPage() {
           <tbody>
             {products.length > 0 ? (
               products.map((p) => {
-                // ✅ SAFE PRICE FORMAT
-                const priceNumber = Number(p.price);
-                const displayPrice = isNaN(priceNumber)
-                  ? "0.00"
-                  : priceNumber.toFixed(2);
+                const displayPrice =
+                  p.price === "N/A" || p.price === null || p.price === undefined || p.price === ""
+                    ? "N/A"
+                    : `PKR ${Number(p.price).toFixed(2)}`;
 
                 return (
                   <tr key={p._id} className="border-t hover:bg-[#F0E5D8]">
                     <td className="p-3 font-medium">{p.name}</td>
-                    <td className="p-3">{p.description}</td>
-                    <td className="p-3 font-semibold">
-                      PKR {displayPrice}
-                    </td>
+                    <td className="p-3">{p.spec}</td> {/* ✅ Changed from p.description to p.spec */}
+                    <td className="p-3 font-semibold">{displayPrice}</td>
                     <td className="p-3">
                       {p.img ? (
                         <img
