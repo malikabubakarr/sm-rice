@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import ProductCard from "@/components/ProductCard";
+import TikTokPageView from "@/components/TikTokPageView";  // Add this import (adjust path if needed, e.g., "../components/TikTokPageView")
 
 type DBProduct = {
   _id: string;
@@ -66,6 +67,9 @@ export default function ProductPage() {
       </Head>
 
       <main className="min-h-screen bg-gradient-to-br from-[#F5F0E6] to-[#E5D3B3] relative overflow-hidden">
+        {/* TikTok Pixel Page View Tracking */}
+        <TikTokPageView />  {/* Add this here to track page views on this products page */}
+
         {/* Subtle background pattern */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-10 left-10 w-32 h-32 bg-[#5B3A1E] rounded-full blur-3xl"></div>

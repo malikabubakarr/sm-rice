@@ -3,6 +3,8 @@ import { ObjectId } from "mongodb";
 import clientPromise from "@/lib/mongodb";
 import Image from "next/image";
 import ProductActions from "../../../components/ProductActions"; // client component
+import TikTokPageView from "../../../components/TikTokPageView"; // Add this for page view tracking
+import ProductViewTracker from "../../../components/ProductViewTracker"; // Add this new client component for ViewContent
 
 export const dynamic = "force-dynamic";
 
@@ -45,6 +47,12 @@ export default async function ProductDetailPage({ params }: Props) {
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-[#F5F0E6] to-[#E5D3B3] py-12 px-6">
+      {/* TikTok Pixel Page View Tracking */}
+      <TikTokPageView />  {/* Tracks page views on this product detail page */}
+
+      {/* TikTok Pixel ViewContent Tracking */}
+      <ProductViewTracker product={productData} />  {/* Tracks ViewContent event on load */}
+
       <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row gap-8">
         
         {/* Product Image */}

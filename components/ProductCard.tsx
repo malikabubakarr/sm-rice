@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useCart } from "../context/CartContext";
+import { trackAddToCart } from "../utils/tiktokPixel";  // Add this import for TikTok tracking
 
 export interface Product {
   _id: string;
@@ -81,6 +82,8 @@ export default function ProductCard({ product }: ProductCardProps) {
             quantity,
           });
           alert("🛒 Added to cart");
+          // Add TikTok Pixel tracking here (after the add-to-cart logic)
+          trackAddToCart(product._id, product.price, 'PKR', quantity);
         }}
         className="mt-6 w-full bg-[#5B3A1E] text-white py-3 rounded-full font-medium shadow-md hover:bg-[#6B4A2E] transition-all"
       >
